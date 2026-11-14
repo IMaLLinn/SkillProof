@@ -1,0 +1,18 @@
+{
+  "required_tests": [
+    "test_database.DatabaseTests.test_empty_directory_initialization",
+    "test_database.DatabaseTests.test_t03_seed_preserves_internal_fields_in_both_tables",
+    "test_database.DatabaseTests.test_seed_and_migrations_are_idempotent",
+    "test_database.DatabaseTests.test_answers_version_migration_preserves_existing_drafts_and_reports",
+    "test_database.DatabaseTests.test_seed_does_not_overwrite_existing_question",
+    "test_database.DatabaseTests.test_data_survives_new_process_and_reinitialization",
+    "test_database.DatabaseTests.test_duplicate_email_rejected",
+    "test_database.DatabaseTests.test_foreign_keys_reject_missing_owner",
+    "test_database.DatabaseTests.test_multiple_submissions_and_new_active_attempt_allowed",
+    "test_database.DatabaseTests.test_one_active_attempt_per_user_matches_current_contract",
+    "test_database.DatabaseTests.test_status_report_timestamp_consistency",
+    "test_database.DatabaseTests.test_question_edit_does_not_change_stored_snapshots",
+    "test_database.DatabaseTests.test_owner_scoped_query_and_cascade_preserve_other_user",
+    "test_database.DatabaseTests.test_transaction_rolls_back_partial_write"
+  ]
+}
