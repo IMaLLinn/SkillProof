@@ -1,0 +1,29 @@
+{
+  "required_tests": [
+    "test_scoring.ScoringTests.test_all_correct_and_no_mutation_or_internal_fields",
+    "test_scoring.ScoringTests.test_all_wrong_and_stable_tie_order",
+    "test_scoring.ScoringTests.test_multiple_exact_set",
+    "test_scoring.ScoringTests.test_30_questions_five_correct_in_one_dimension_is_100",
+    "test_scoring.ScoringTests.test_same_difficulty_items_with_unequal_dimension_sizes",
+    "test_scoring.ScoringTests.test_difficulty_weights_normalized_to_100",
+    "test_scoring.ScoringTests.test_mixed_difficulty_extremes_and_dimensions_remain_count_based",
+    "test_scoring.ScoringTests.test_hard_multiple_choice_has_no_partial_weight_credit",
+    "test_scoring.ScoringTests.test_precision_and_weak_order",
+    "test_scoring.ScoringTests.test_weak_order_uses_unrounded_values",
+    "test_scoring.ScoringTests.test_each_dimension_fraction_against_exact_oracle",
+    "test_scoring.ScoringTests.test_missing_dimension_and_empty_paper_fail",
+    "test_scoring.ScoringTests.test_bad_snapshot_or_answers_fail",
+    "test_reports.ReportTests.test_owner_gets_saved_report_with_no_cache_or_private_fields",
+    "test_reports.ReportTests.test_snapshot_survives_question_and_attempt_source_changes",
+    "test_reports.ReportTests.test_saved_report_survives_app_restart_and_real_login",
+    "test_reports.ReportTests.test_missing_and_sql_injection_are_404",
+    "test_reports.ReportTests.test_other_user_cannot_read_even_with_forged_owner_identity",
+    "test_reports.ReportTests.test_unsubmitted_is_409",
+    "test_reports.ReportTests.test_anonymous_and_forged_cookie_cannot_read",
+    "test_reports.ReportTests.test_expired_session_cannot_read",
+    "test_reports.ReportTests.test_logout_revokes_report_access_even_if_cookie_is_replayed",
+    "test_reports.ReportTests.test_corrupt_snapshot_fails_without_leaking_content",
+    "test_reports.ReportTests.test_unavailable_storage_returns_safe_503",
+    "test_reports.ReportTests.test_health_still_works"
+  ]
+}
