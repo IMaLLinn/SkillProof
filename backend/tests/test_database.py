@@ -116,9 +116,10 @@ class DatabaseTests(unittest.TestCase):
         initialize(settings)
         with closing(sqlite3.connect(settings.database_path)) as migrated:
             after = migrated.execute("SELECT * FROM attempts ORDER BY id").fetchall()
-            self.assertEqual([row[:-1] for row in after], before)
-            self.assertEqual([row[-1] for row in after], [0, 0])
-            self.assertEqual(migrated.execute("SELECT version FROM schema_migrations ORDER BY version").fetchall(), [(1,), (2,), (3,)])
+            self.assertEqual([row[:-2] for row in after], before)
+            self.assertEqual([row[-2:] for row in after], [(0, None), (0, None)])
+            versions = migrated.execute("SELECT version FROM schema_migrations ORDER BY version").fetchall()
+            self.assertEqual(versions, [(1,), (2,), (3,), (4,)])
             self.assertEqual(migrated.execute("PRAGMA integrity_check").fetchone()[0], "ok")
 
     def test_seed_does_not_overwrite_existing_question(self):
