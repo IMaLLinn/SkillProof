@@ -32,7 +32,7 @@ def report_fixture(attempt, submitted_at):
         "id": attempt["id"], "roleId": attempt["role"]["id"], "roleName": attempt["role"]["name"],
         "createdAt": attempt["createdAt"], "submittedAt": submitted_at,
         "modelVersion": "test-scorer-v1", "score": 100,
-        "dimensions": [{"id": key, "name": key, "score": 100} for key in DIMENSION_IDS],
+        "dimensions": [{"id": key, "name": key, "score": 100, "correct": 3, "total": 3} for key in DIMENSION_IDS],
     }
 
 
@@ -352,6 +352,69 @@ class AssessmentTests(unittest.TestCase):
         self.assertNotEqual(first["id"], second["id"])
         self.assertEqual(json.loads(self.row(first)["report_json"]), report)
         self.assertEqual(self.row(second)["reused_question_count"], 18)
+
+    def test_history_lists_owned_attempts_with_scores_filters_and_versions(self):
+        url = "/api/attempts/history"
+        self.assertEqual(self.client.get(url).json(), {"items": []})
+        first_version = self.con.execute("SELECT bank_version FROM question_bank_state WHERE id=1").fetchone()[0]
+        first = self.create()
+        self.complete(first)
+        report = self.submit(first).json()
+        self.con.execute("UPDATE question_bank_state SET bank_version='9.0.0' WHERE id=1")
+        second = self.create()
+
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200, response.text)
+        draft, submitted = response.json()["items"]
+        self.assertEqual((draft["id"], submitted["id"]), (second["id"], first["id"]))
+        self.assertEqual(draft["status"], "in_progress")
+        self.assertEqual(draft["questionBankVersion"], "9.0.0")
+        for field in ("submittedAt", "reportId", "score", "dimensions"):
+            self.assertIsNone(draft[field])
+        self.assertEqual(draft["reusedQuestionCount"], 18)
+        self.assertEqual(submitted["reportId"], report["id"])
+        self.assertEqual(submitted["score"], report["score"])
+        self.assertEqual(submitted["dimensions"], report["dimensions"])
+        self.assertEqual(submitted["modelVersion"], report["modelVersion"])
+        self.assertEqual(submitted["blueprintVersion"], self.row(first)["blueprint_version"])
+        self.assertEqual(submitted["questionBankVersion"], first_version)
+        self.assertEqual(
+            self.client.get(url, params={"status": "submitted", "roleId": "backend"}).json(),
+            {"items": [submitted]},
+        )
+        self.assertEqual(self.client.get(url, params={"roleId": "unknown"}).json(), {"items": []})
+        self.assertEqual(self.client.get(url, params={"status": "unknown"}).status_code, 422)
+
+        self.client.cookies.set("skillproof_session", "bob-session")
+        self.assertEqual(self.client.get(url).json(), {"items": []})
+        self.assertEqual(self.client.get(f"/api/reports/{first['id']}").status_code, 404)
+        self.client.cookies.clear()
+        self.assertEqual(self.client.get(url).status_code, 401)
+
+    def test_history_keeps_other_rows_when_a_legacy_report_is_damaged(self):
+        first = self.create()
+        self.complete(first)
+        report = self.submit(first).json()
+        second = self.create()
+        self.complete(second)
+        self.submit(second)
+        for damaged in ("{", dump({**report, "dimensions": report["dimensions"][:-1]})):
+            with self.subTest(damaged=damaged):
+                self.con.execute(
+                    "UPDATE attempts SET report_json=?,question_bank_version=NULL WHERE id=?",
+                    (damaged, first["id"]),
+                )
+                response = self.client.get("/api/attempts/history")
+                self.assertEqual(response.status_code, 200, response.text)
+                valid, legacy = response.json()["items"]
+                self.assertEqual(valid["id"], second["id"])
+                self.assertEqual(valid["score"], 100)
+                self.assertEqual(legacy["reportId"], first["id"])
+                for field in ("score", "dimensions", "questionBankVersion"):
+                    self.assertIsNone(legacy[field])
+                detail = self.client.get(f"/api/reports/{first['id']}")
+                self.assertEqual(detail.status_code, 500, detail.text)
+                self.assertEqual(detail.json(), {"detail": "结果快照无效"})
 
     def test_unseen_candidates_are_preferred(self):
         first = self.create()
