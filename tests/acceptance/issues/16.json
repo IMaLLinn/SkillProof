@@ -1,0 +1,8 @@
+{
+  "required_tests": [
+    "test_assessments.AssessmentTests.test_history_lists_owned_attempts_with_scores_filters_and_versions",
+    "test_assessments.AssessmentTests.test_history_keeps_other_rows_when_a_legacy_report_is_damaged",
+    "test_assessments.AssessmentTests.test_new_attempt_after_submit_preserves_old_report_and_tracks_reuse",
+    "test_database.DatabaseTests.test_answers_version_migration_preserves_existing_drafts_and_reports"
+  ]
+}

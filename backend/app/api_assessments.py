@@ -3,6 +3,7 @@
 from collections import defaultdict
 import json
 import random
+from typing import Literal
 from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -12,7 +13,7 @@ from .assessment_dependencies import get_assessment_roles, get_report_builder, r
 from .catalog import BLUEPRINT, DIMENSION_IDS, DIMENSION_NAMES, MODEL_VERSION
 from .db import dump, now_iso, transaction
 from .models import AnswersInput, AttemptInput, QuestionInput
-from .reports import read_report
+from .reports import parse_report_snapshot, read_report, report_score_summary
 from .security import get_db
 
 router = APIRouter(prefix="/api", tags=["assessments"])
@@ -40,6 +41,25 @@ def attempt_view(row) -> dict:
         "status": row["status"], "createdAt": row["created_at"], "submittedAt": row["submitted_at"],
         "questionCount": len(questions), "answeredCount": sum(bool(value) for value in answers.values()),
         "questions": questions, "answers": answers, "answersVersion": row["answers_version"],
+    }
+
+
+def history_item(row) -> dict:
+    report_id = row["id"] if row["status"] == "submitted" else None
+    score = dimensions = None
+    if report_id is not None:
+        try:
+            report = parse_report_snapshot(row["report_json"], report_id)
+            score, dimensions = report_score_summary(report)
+        except (TypeError, ValueError):
+            # Keep other history entries available if this report is damaged.
+            pass
+    return {
+        "id": row["id"], "roleId": row["role_id"], "roleName": row["role_name"],
+        "status": row["status"], "createdAt": row["created_at"], "submittedAt": row["submitted_at"],
+        "reportId": report_id, "score": score, "dimensions": dimensions,
+        "modelVersion": row["model_version"], "questionBankVersion": row["question_bank_version"],
+        "blueprintVersion": row["blueprint_version"], "reusedQuestionCount": row["reused_question_count"],
     }
 
 
@@ -96,12 +116,33 @@ def start_attempt(
         attempt_id = str(uuid4())
         con.execute(
             "INSERT INTO attempts(id,user_id,role_id,role_name,status,created_at,blueprint_version,"
-            "model_version,questions_json,role_json,resources_json,reused_question_count) "
-            "VALUES(?,?,?,?,'in_progress',?,?,?,?,?,?,?)",
+            "model_version,questions_json,role_json,resources_json,reused_question_count,question_bank_version) "
+            "VALUES(?,?,?,?,'in_progress',?,?,?,?,?,?,?,(SELECT bank_version FROM question_bank_state WHERE id=1))",
             (attempt_id, user_id, role["id"], role["name"], now_iso(), BLUEPRINT["version"], MODEL_VERSION,
              dump(questions), dump(role), "[]", reused),
         )
         return attempt_view(owned_attempt(con, attempt_id, user_id))
+
+
+@router.get("/attempts/history")
+def list_attempt_history(
+    roleId: str | None = None, status: Literal["in_progress", "submitted"] | None = None,
+    user_id: str = Depends(require_assessment_user), con=Depends(get_db),
+):
+    query = (
+        "SELECT id,role_id,role_name,status,created_at,submitted_at,report_json,"
+        "model_version,question_bank_version,blueprint_version,reused_question_count "
+        "FROM attempts WHERE user_id=?"
+    )
+    parameters = [user_id]
+    if roleId is not None:
+        query += " AND role_id=?"
+        parameters.append(roleId)
+    if status is not None:
+        query += " AND status=?"
+        parameters.append(status)
+    rows = con.execute(query + " ORDER BY created_at DESC,id DESC", parameters)
+    return {"items": [history_item(row) for row in rows]}
 
 
 @router.get("/attempts/{attempt_id}")

@@ -31,9 +31,11 @@ const ERROR_TITLE: Record<ReportLoadError['kind'], string> = {
 
 interface ResultPageProps {
   attemptId: string
+  /** 打开历史测评记录页；未传入时不显示该入口，保持组件可独立使用。 */
+  onOpenHistory?: () => void
 }
 
-export function ResultPage({ attemptId }: ResultPageProps) {
+export function ResultPage({ attemptId, onOpenHistory }: ResultPageProps) {
   const [state, setState] = useState<PageState>({ status: 'loading' })
   const [reloadToken, setReloadToken] = useState(0)
 
@@ -230,6 +232,15 @@ export function ResultPage({ attemptId }: ResultPageProps) {
         </div>
         <p className="result-table-hint">表格可左右滑动查看完整列</p>
       </section>
+
+      {onOpenHistory && (
+        <p className="result-footer">
+          <button type="button" className="result-footer__link" onClick={onOpenHistory}>
+            查看历史测评记录
+          </button>
+          <span className="result-footer__note">可在这里复测同一岗位，并对比两次结果。</span>
+        </p>
+      )}
 
     </main>
   )
