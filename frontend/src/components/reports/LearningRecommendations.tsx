@@ -43,9 +43,6 @@ export function LearningRecommendations({ attemptId }: { attemptId: string }) {
       {state.status === 'ready' && state.items.length === 0 && (
         <p className="result-empty" role="status">本次暂无学习建议。</p>
       )}
-      {state.status === 'ready' && state.items.length > 0 && (
-        <p className="learning-intro">按本次得分较低的维度，选几个知识点先复习。</p>
-      )}
       {state.status === 'ready' && state.items.map((dimension) => (
         <div className="learning-group" key={dimension.id}>
           <header className="learning-group-header">
