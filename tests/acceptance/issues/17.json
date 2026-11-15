@@ -1,0 +1,5 @@
+{
+  "required_tests": [
+    "test_assessments.AssessmentTests.test_new_attempt_after_submit_preserves_old_report_and_tracks_reuse"
+  ]
+}
