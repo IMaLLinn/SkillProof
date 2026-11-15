@@ -12,6 +12,7 @@ from .api_auth import router as auth_router
 from .api_catalog import router as catalog_router
 from .config import Settings
 from .db import initialize
+from .recommendations import router as recommendations_router
 from .reports import router as reports_router
 from .request_guard import RequestGuard
 
@@ -62,6 +63,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(catalog_router)
     app.include_router(assessments_router)
     app.include_router(reports_router)
+    app.include_router(recommendations_router)
     return app
 
 
