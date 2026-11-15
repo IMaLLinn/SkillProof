@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { RadarChart } from '../../components/reports/RadarChart'
 import { DimensionBars } from '../../components/reports/DimensionBars'
+import { LearningRecommendations } from '../../components/reports/LearningRecommendations'
 import { fetchReport } from '../../lib/reportApi'
 import type { ReportLoadError } from '../../lib/reportApi'
 import {
@@ -197,6 +198,8 @@ export function ResultPage({ attemptId }: ResultPageProps) {
           排序依据：后端按未舍入维度分从低到高排列，并列时按固定维度顺序；第 3 名后的同分项会一并列出，因此条目可能多于三项。排序只描述本次测评结果，不代表学习效果或所需时间。
         </p>
       </section>
+
+      <LearningRecommendations key={attemptId} attemptId={attemptId} />
 
       <section className="result-section" aria-labelledby="result-table-title">
         <h2 className="result-section__title" id="result-table-title">

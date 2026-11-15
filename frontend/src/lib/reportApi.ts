@@ -204,3 +204,53 @@ export async function fetchReport(
 
   return { ok: true, report: payload }
 }
+
+export interface Recommendation {
+  id: string
+  name: string
+  description: string
+  resources: {
+    topicId: string
+    topic: string
+    title: string
+    summary: string
+    source: string
+    url: string
+    exercise: string
+  }[]
+}
+
+function hasTextFields(value: unknown, fields: string[]): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && fields.every((field) => {
+    const entry = (value as Record<string, unknown>)[field]
+    return typeof entry === 'string' && entry.trim().length > 0
+  })
+}
+
+function isRecommendation(value: unknown): value is Recommendation {
+  return hasTextFields(value, ['id', 'name', 'description']) &&
+    Array.isArray(value.resources) &&
+    value.resources.every((resource) =>
+      hasTextFields(resource, ['topicId', 'topic', 'title', 'summary', 'source', 'url', 'exercise']) &&
+      typeof resource.url === 'string' && resource.url.startsWith('https://')
+    )
+}
+
+export async function fetchRecommendations(
+  attemptId: string,
+  signal: AbortSignal,
+): Promise<Recommendation[]> {
+  const url = `${API_BASE}/api/reports/${encodeURIComponent(attemptId)}/recommendations`
+  const response = await fetch(url, {
+    credentials: 'include',
+    headers: { Accept: 'application/json' },
+    signal,
+  })
+  if (!response.ok) throw new Error('Could not load learning recommendations')
+  const payload: unknown = await response.json()
+  if (typeof payload === 'object' && payload !== null && 'items' in payload &&
+      Array.isArray(payload.items) && payload.items.every(isRecommendation)) {
+    return payload.items
+  }
+  throw new Error('Invalid learning recommendations')
+}

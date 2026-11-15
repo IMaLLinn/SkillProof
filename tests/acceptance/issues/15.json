@@ -1,0 +1,9 @@
+{
+  "required_tests": [
+    "test_recommendations.RecommendationTests.test_all_six_dimensions_have_resources_with_ability_tree_topics",
+    "test_recommendations.RecommendationTests.test_matches_saved_report_order_and_includes_third_place_ties",
+    "test_recommendations.RecommendationTests.test_no_resources_and_full_score_return_empty",
+    "test_recommendations.RecommendationTests.test_requires_login_ownership_and_submitted_result",
+    "test_recommendations.RecommendationTests.test_unavailable_resources_do_not_block_submission_or_report"
+  ]
+}
