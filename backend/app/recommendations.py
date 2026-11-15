@@ -13,7 +13,7 @@ from .url_validation import https_url
 
 router = APIRouter(prefix="/api", tags=["reports"])
 LOGGER = logging.getLogger("skillproof")
-RESOURCE_FIELDS = ("topicId", "topic", "title", "summary", "source", "url", "exercise")
+RESOURCE_FIELDS = ("topicId", "topic", "title", "summary", "source", "url", "exercise", "expectedResult")
 
 
 def read_resources(path: Path) -> dict[str, list[dict]]:

@@ -107,11 +107,19 @@
   cursor: pointer;
 }
 
-.result-page .learning-practice p {
+.result-page .learning-practice-body {
   margin: 7px 0 0;
   padding: 8px 12px;
   border-left: 2px solid var(--result-border);
   background: var(--result-surface-soft);
+}
+
+.result-page .learning-practice-body p {
+  margin: 0;
+}
+
+.result-page .learning-practice-body .learning-expected {
+  margin-top: 12px;
 }
 
 .result-page .learning-reference:focus-visible,

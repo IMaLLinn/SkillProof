@@ -312,7 +312,8 @@ PR #25 同步调整现有前端和验收调用方；旧调用方缺少 `expected
           "topic": "引用与可变对象",
           "title": "判断两个变量是否共用列表",
           "summary": "把一个列表赋给另一个变量，两个变量会指向同一个列表。用 .copy() 可为这个简单列表创建副本。",
-          "exercise": "怎么做\n打开 Python，把下面两段依次运行，比较两次 print(a) 的输出。\n\na = [1]\nb = a\nb.append(2)\nprint(a)\n\na = [1]\nb = a.copy()\nb.append(2)\nprint(a)\n\n看到什么\n第一次打印 [1, 2]，第二次打印 [1]。第二次修改的是副本。",
+          "exercise": "打开 Python，把下面两段依次运行，比较两次 print(a) 的输出。\n\na = [1]\nb = a\nb.append(2)\nprint(a)\n\na = [1]\nb = a.copy()\nb.append(2)\nprint(a)",
+          "expectedResult": "第一次打印 [1, 2]，第二次打印 [1]。第二次修改的是副本。",
           "source": "Python 3.13 中文文档",
           "url": "https://docs.python.org/zh-cn/3.13/library/copy.html"
         }

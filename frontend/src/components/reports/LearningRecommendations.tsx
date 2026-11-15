@@ -68,14 +68,20 @@ export function LearningRecommendations({ attemptId }: { attemptId: string }) {
                 </div>
                 <details className="learning-practice">
                   <summary>练习建议<span className="result-visually-hidden">：{resource.topic}</span></summary>
-                  <p>
-                    {resource.exercise.split('\n').map((line, index) => (
-                      <Fragment key={index}>
-                        {index > 0 && <br />}
-                        {line}
-                      </Fragment>
-                    ))}
-                  </p>
+                  <div className="learning-practice-body">
+                    <p>
+                      {resource.exercise.split('\n').map((line, index) => (
+                        <Fragment key={index}>
+                          {index > 0 && <br />}
+                          {line}
+                        </Fragment>
+                      ))}
+                    </p>
+                    <p className="learning-expected">
+                      <strong>预期结果</strong><br />
+                      {resource.expectedResult}
+                    </p>
+                  </div>
                 </details>
               </li>
             ))}

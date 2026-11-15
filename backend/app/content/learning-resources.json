@@ -4,7 +4,8 @@
     "topic": "引用与可变对象",
     "title": "判断两个变量是否共用列表",
     "summary": "把一个列表赋给另一个变量，两个变量会指向同一个列表。用 .copy() 可为这个简单列表创建副本。",
-    "exercise": "怎么做\n打开 Python，把下面两段依次运行，比较两次 print(a) 的输出。\n\na = [1]\nb = a\nb.append(2)\nprint(a)\n\na = [1]\nb = a.copy()\nb.append(2)\nprint(a)\n\n看到什么\n第一次打印 [1, 2]，第二次打印 [1]。第二次修改的是副本。",
+    "exercise": "打开 Python，把下面两段依次运行，比较两次 print(a) 的输出。\n\na = [1]\nb = a\nb.append(2)\nprint(a)\n\na = [1]\nb = a.copy()\nb.append(2)\nprint(a)",
+    "expectedResult": "第一次打印 [1, 2]，第二次打印 [1]。第二次修改的是副本。",
     "source": "Python 3.13 中文文档",
     "url": "https://docs.python.org/zh-cn/3.13/library/copy.html"
   },
@@ -13,7 +14,8 @@
     "topic": "异常与资源释放",
     "title": "让文件在出错时也能关闭",
     "summary": "把关闭文件的操作放进 finally，读文件成功或抛出异常时都会执行。",
-    "exercise": "怎么做\n用 Python 通过 f = open(...) 打开一个练习文件。在 try 中调用 f.read()，在 finally 中调用 f.close()，然后打印 f.closed。第二次运行把 f.read() 改成 raise ValueError(\"练习\")，用外层 try/except 捕获异常后再打印 f.closed。\n\n看到什么\n两次都打印 True，说明出错时也关闭了文件。",
+    "exercise": "用 Python 通过 f = open(...) 打开一个练习文件。在 try 中调用 f.read()，在 finally 中调用 f.close()，然后打印 f.closed。第二次运行把 f.read() 改成 raise ValueError(\"练习\")，用外层 try/except 捕获异常后再打印 f.closed。",
+    "expectedResult": "两次都打印 True，说明出错时也关闭了文件。",
     "source": "Python 3.13 中文教程",
     "url": "https://docs.python.org/zh-cn/3.13/tutorial/errors.html#defining-clean-up-actions"
   },
@@ -22,7 +24,8 @@
     "topic": "二分查找的前提",
     "title": "判断什么时候能用二分查找",
     "summary": "只有搜索范围具备单调性，才能靠中点排除一半。普通数组查值时，先确认数组有序。",
-    "exercise": "怎么做\n在纸上用升序二分查找 3。先用 [1, 3, 5, 7]，再用 [1, 5, 3, 7]。每步都取靠左的中点，把比较后剩下的范围写下来。\n\n看到什么\n有序数组第一步就找到 3；无序数组第一步读到 5，按升序规则舍去右半边时会把 3 一起舍掉。",
+    "exercise": "在纸上用升序二分查找 3。先用 [1, 3, 5, 7]，再用 [1, 5, 3, 7]。每步都取靠左的中点，把比较后剩下的范围写下来。",
+    "expectedResult": "有序数组第一步就找到 3；无序数组第一步读到 5，按升序规则舍去右半边时会把 3 一起舍掉。",
     "source": "OI Wiki（中文）",
     "url": "https://oi-wiki.org/basic/binary/"
   },
@@ -31,7 +34,8 @@
     "topic": "无权图最短路径",
     "title": "用 BFS 找边数最少的路径",
     "summary": "BFS 从起点逐层访问。在无权图里，第一次到达一个节点时走过的边数最少。",
-    "exercise": "怎么做\n画出两条路径 A→B→D 和 A→C→E→D。从 A 开始，把每一层访问到的节点写下来，找到 D 时停下。\n\n看到什么\nD 在第 2 层首次被发现，最短路径 A→B→D 有 2 条边。",
+    "exercise": "画出两条路径 A→B→D 和 A→C→E→D。从 A 开始，把每一层访问到的节点写下来，找到 D 时停下。",
+    "expectedResult": "D 在第 2 层首次被发现，最短路径 A→B→D 有 2 条边。",
     "source": "OI Wiki（中文）",
     "url": "https://oi-wiki.org/graph/bfs/"
   },
@@ -40,7 +44,8 @@
     "topic": "主键与外键约束",
     "title": "区分主键和外键各管什么",
     "summary": "主键识别一行记录，外键检查引用是否存在。例如订单里的客户编号要指向已有客户。",
-    "exercise": "怎么做\n在启用外键约束的练习库中，建一张客户表和一张通过外键引用客户编号的订单表。先插入客户 1，再尝试插入另一个客户 1，以及一笔引用客户 99 的订单。\n\n看到什么\n重复的编号违反主键约束。不存在的客户编号违反外键约束。",
+    "exercise": "在启用外键约束的练习库中，建一张客户表和一张通过外键引用客户编号的订单表。先插入客户 1，再尝试插入另一个客户 1，以及一笔引用客户 99 的订单。",
+    "expectedResult": "重复的编号违反主键约束。不存在的客户编号违反外键约束。",
     "source": "PostgreSQL 16 官方文档（英文）",
     "url": "https://www.postgresql.org/docs/16/ddl-constraints.html"
   },
@@ -49,7 +54,8 @@
     "topic": "LEFT JOIN 与过滤位置",
     "title": "判断 LEFT JOIN 会保留哪些行",
     "summary": "右表的筛选条件放在 ON 里只影响匹配，放在 WHERE 里会再过滤连接后的行。",
-    "exercise": "怎么做\n用客户 A、B 和一笔属于 A 的已付款订单，写两条 LEFT JOIN 查询。第一条把「订单已付款」放在连接的 ON 条件中，第二条把它移到 WHERE，并比较客户列。\n\n看到什么\n放在 ON 时，A 和 B 都留下，B 的订单字段为空。放在 WHERE 时，只剩 A。",
+    "exercise": "用客户 A、B 和一笔属于 A 的已付款订单，写两条 LEFT JOIN 查询。第一条把「订单已付款」放在连接的 ON 条件中，第二条把它移到 WHERE，并比较客户列。",
+    "expectedResult": "放在 ON 时，A 和 B 都留下，B 的订单字段为空。放在 WHERE 时，只剩 A。",
     "source": "PostgreSQL 16 官方文档（英文）",
     "url": "https://www.postgresql.org/docs/16/queries-table-expressions.html#QUERIES-JOIN"
   },
@@ -58,7 +64,8 @@
     "topic": "TCP 字节流与消息边界",
     "title": "判断 TCP 收到的字节何时够一条消息",
     "summary": "TCP 按顺序交付字节。应用可以用长度前缀判断一条消息的边界。",
-    "exercise": "怎么做\n在纸上模拟一个协议：每条消息的第一个数字表示紧随其后的字节数。先收到 2O，再收到 K3YES。每次收到数据后，写下现在可以读出的完整消息。\n\n看到什么\n收到 2O 时没有完整消息。收到剩余字节后，可以依次读出 OK 和 YES。",
+    "exercise": "在纸上模拟一个协议：每条消息的第一个数字表示紧随其后的字节数。先收到 2O，再收到 K3YES。每次收到数据后，写下现在可以读出的完整消息。",
+    "expectedResult": "收到 2O 时没有完整消息。收到剩余字节后，可以依次读出 OK 和 YES。",
     "source": "RFC 9293 §2.2（英文）",
     "url": "https://www.rfc-editor.org/rfc/rfc9293.html#section-2.2"
   },
@@ -67,7 +74,8 @@
     "topic": "HTTP 条件请求与 ETag",
     "title": "判断服务器该返回 304 还是 200",
     "summary": "浏览器可以用 If-None-Match 发回旧的 ETag，让服务器判断缓存是否还能用。",
-    "exercise": "怎么做\n画出一次 GET 请求，带上 If-None-Match: \"v1\"。分别假设服务端当前的 ETag 是 \"v1\" 和 \"v2\"，写出响应的状态码和是否发送响应体。\n\n看到什么\n\"v1\" 匹配时返回 304，没有响应体。\"v2\" 不匹配时返回 200，带新内容。",
+    "exercise": "画出一次 GET 请求，带上 If-None-Match: \"v1\"。分别假设服务端当前的 ETag 是 \"v1\" 和 \"v2\"，写出响应的状态码和是否发送响应体。",
+    "expectedResult": "\"v1\" 匹配时返回 304，没有响应体。\"v2\" 不匹配时返回 200，带新内容。",
     "source": "MDN Web Docs（中文）",
     "url": "https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Guides/Caching#etagif-none-match"
   },
@@ -76,7 +84,8 @@
     "topic": "线程共享与私有资源",
     "title": "区分线程共享的数据和私有的栈",
     "summary": "同一进程的线程可访问同一个堆对象。它们各有自己的调用栈。",
-    "exercise": "怎么做\n画出两个线程，各自在函数里有一个局部计数器，同时持有同一个列表的引用。把两个计数器和这个列表分别画到对应的位置，再标出线程 A 向列表追加元素的位置。\n\n看到什么\n两个局部计数器是各自的。列表是共享的，线程 B 下一次读取同一列表时可以看到追加的元素。",
+    "exercise": "画出两个线程，各自在函数里有一个局部计数器，同时持有同一个列表的引用。把两个计数器和这个列表分别画到对应的位置，再标出线程 A 向列表追加元素的位置。",
+    "expectedResult": "两个局部计数器是各自的。列表是共享的，线程 B 下一次读取同一列表时可以看到追加的元素。",
     "source": "OSTEP 教材 · 线程导论（英文）",
     "url": "https://pages.cs.wisc.edu/~remzi/OSTEP/threads-intro.pdf"
   },
@@ -85,7 +94,8 @@
     "topic": "共享计数器与临界区",
     "title": "解释加锁为什么能避免丢更新",
     "summary": "读值、加一、写回要作为一个整体加锁，否则两个线程可能读到同一个旧值。",
-    "exercise": "怎么做\n从计数器 0 开始，写出两个线程各自执行「读值、加一、写回」的步骤。第一轮让它们先都读到 0，再依次写回。第二轮让同一把锁保护每次的完整读改写。\n\n看到什么\n第一轮两次都写回 1，丢了一次更新。第二轮的最终值是 2。",
+    "exercise": "从计数器 0 开始，写出两个线程各自执行「读值、加一、写回」的步骤。第一轮让它们先都读到 0，再依次写回。第二轮让同一把锁保护每次的完整读改写。",
+    "expectedResult": "第一轮两次都写回 1，丢了一次更新。第二轮的最终值是 2。",
     "source": "Python 3.13 中文文档",
     "url": "https://docs.python.org/zh-cn/3.13/library/threading.html#lock-objects"
   },
@@ -94,7 +104,8 @@
     "topic": "版本控制与冲突处理",
     "title": "合并冲突时保留两边需要的改动",
     "summary": "冲突标记给出两个分支在同一处的修改。先决定最终内容，再暂存和提交。",
-    "exercise": "怎么做\n在练习仓库的两个分支上各改同一行，合并后查看冲突标记。把两边需要的内容整理好，暂存并提交，再运行 git status 并打开修改后的文件。\n\n看到什么\ngit status 不再显示未解决冲突，文件里保留了选定的内容，冲突标记已经移除。",
+    "exercise": "在练习仓库的两个分支上各改同一行，合并后查看冲突标记。把两边需要的内容整理好，暂存并提交，再运行 git status 并打开修改后的文件。",
+    "expectedResult": "git status 不再显示未解决冲突，文件里保留了选定的内容，冲突标记已经移除。",
     "source": "Pro Git（中文版）",
     "url": "https://git-scm.com/book/zh/v2/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6"
   },
@@ -103,7 +114,8 @@
     "topic": "单元测试与外部依赖",
     "title": "用固定输入测试依赖环境的代码",
     "summary": "测试可以临时改环境变量，跑完由 monkeypatch 恢复，避免影响后续用例。",
-    "exercise": "怎么做\n写一个读取 APP_MODE 的函数，环境变量不存在时返回 local。在两个 pytest 用例里，分别用 monkeypatch.setenv 把它设为 test，以及用 monkeypatch.delenv 模拟变量不存在。\n\n看到什么\n第一个用例应得到 test，第二个应得到 local。pytest 在每个用例结束后会恢复环境。",
+    "exercise": "写一个读取 APP_MODE 的函数，环境变量不存在时返回 local。在两个 pytest 用例里，分别用 monkeypatch.setenv 把它设为 test，以及用 monkeypatch.delenv 模拟变量不存在。",
+    "expectedResult": "第一个用例应得到 test，第二个应得到 local。pytest 在每个用例结束后会恢复环境。",
     "source": "pytest 官方文档（英文）",
     "url": "https://docs.pytest.org/en/stable/how-to/monkeypatch.html"
   }

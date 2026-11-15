@@ -217,6 +217,7 @@ export interface Recommendation {
     source: string
     url: string
     exercise: string
+    expectedResult: string
   }[]
 }
 
@@ -231,7 +232,7 @@ function isRecommendation(value: unknown): value is Recommendation {
   return hasTextFields(value, ['id', 'name', 'description']) &&
     Array.isArray(value.resources) &&
     value.resources.every((resource) =>
-      hasTextFields(resource, ['topicId', 'topic', 'title', 'summary', 'source', 'url', 'exercise']) &&
+      hasTextFields(resource, ['topicId', 'topic', 'title', 'summary', 'source', 'url', 'exercise', 'expectedResult']) &&
       typeof resource.url === 'string' && resource.url.startsWith('https://')
     )
 }
