@@ -22,6 +22,12 @@
   cursor: not-allowed;
 }
 
+.jobs-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .jobs-user {
   overflow-wrap: anywhere;
 }

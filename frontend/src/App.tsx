@@ -6,12 +6,14 @@ import RegisterPage from './pages/auth/RegisterPage'
 import JobSelectionPage from './pages/jobs/JobSelectionPage'
 import Assessment from './pages/assessment/Assessment'
 import { ResultPage } from './pages/reports/ResultPage'
+import { HistoryPage } from './pages/reports/HistoryPage'
 
 const ATTEMPT_PATH = /^\/attempts\/([^/]+)\/?$/
 const REPORT_PATH = /^\/reports\/([^/]+)\/?$/
+const HISTORY_PATH = /^\/history\/?$/
 
 function authenticatedPath(path: string) {
-  return ATTEMPT_PATH.test(path) || REPORT_PATH.test(path) ? path : '/jobs'
+  return ATTEMPT_PATH.test(path) || REPORT_PATH.test(path) || HISTORY_PATH.test(path) ? path : '/jobs'
 }
 
 function decodeReportId(value: string): string | null {
@@ -231,6 +233,27 @@ function App() {
     }
   }
 
+  /**
+   * 从历史记录页发起复测。
+   * 复用与「开始 / 继续测评」相同的创建接口：该岗位有进行中测评时继续作答，
+   * 其他岗位有进行中测评时后端返回 409，由历史页展示提示。
+   */
+  async function startRetest(roleId: string) {
+    if (creationRequest.current || isLoggingOut) return
+    const controller = new AbortController()
+    creationRequest.current = controller
+    try {
+      const data = await getCurrentUser(controller.signal)
+      if (controller.signal.aborted) return
+      setCsrfToken(data.csrfToken)
+      setUser(data.user)
+      const attempt = await createAttempt(roleId, controller.signal)
+      if (!controller.signal.aborted) navigate(`/attempts/${encodeURIComponent(attempt.id)}`)
+    } finally {
+      if (creationRequest.current === controller) creationRequest.current = null
+    }
+  }
+
   function retrySession() {
     setIsCheckingSession(true)
     setSessionError('')
@@ -256,6 +279,17 @@ function App() {
   }
 
   if (user) {
+    if (HISTORY_PATH.test(page)) {
+      return (
+        <HistoryPage
+          key={user.id}
+          onBack={() => navigate('/jobs')}
+          onOpenReport={(id) => navigate(`/reports/${encodeURIComponent(id)}`)}
+          onOpenAttempt={(id) => navigate(`/attempts/${encodeURIComponent(id)}`)}
+          onRetest={startRetest}
+        />
+      )
+    }
     const attemptMatch = ATTEMPT_PATH.exec(page)
     if (attemptMatch) {
       return <Assessment key={`${user.id}:${attemptMatch[1]}`} attemptId={attemptMatch[1]}
@@ -275,7 +309,13 @@ function App() {
           </main>
         )
       }
-      return <ResultPage key={`${user.id}:${attemptId}`} attemptId={attemptId} />
+      return (
+        <ResultPage
+          key={`${user.id}:${attemptId}`}
+          attemptId={attemptId}
+          onOpenHistory={() => navigate('/history')}
+        />
+      )
     }
     return (
       <JobSelectionPage
@@ -288,6 +328,7 @@ function App() {
         onSelectRole={selectRole}
         onStartAssessment={startAssessment}
         isStarting={isStarting}
+        onOpenHistory={() => navigate('/history')}
       />
     )
   }
