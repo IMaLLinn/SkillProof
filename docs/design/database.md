@@ -111,7 +111,8 @@ T01 采用 HttpOnly Cookie 携带服务端会话凭据，因此需要此表。
 | status | TEXT | CHECK：`in_progress`、`submitted` |
 | created_at | TEXT | 创建时间 |
 | submitted_at | TEXT，可空 | 提交时间 |
-| blueprint_version / model_version | TEXT | 创建时使用的蓝图与模型版本 |
+| blueprint_version / model_version | TEXT | 测评使用的抽题蓝图与模型版本，提交时以保存报告中的评分版本为准 |
+| question_bank_version | TEXT，可空 | `004_attempt_question_bank_version.sql` 新增，创建测评时保存已同步的题库版本，迁移前的记录保留 NULL |
 | questions_json | TEXT | 本次题目快照，包含服务端评分所需信息 |
 | role_json | TEXT | 本次岗位配置快照，包括六维权重 |
 | resources_json | TEXT | 当前迁移保留的后续资源快照字段；Alpha 可显式写入 `[]`，无默认值 |
