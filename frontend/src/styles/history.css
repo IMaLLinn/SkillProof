@@ -1,0 +1,681 @@
+/* 历史记录与结果对比页样式：作用域限定在 .history-page 内，避免影响其他页面。 */
+
+.history-page {
+  --history-text: #1f2430;
+  --history-muted: #626c82;
+  --history-border: #e3e6ee;
+  --history-surface: #ffffff;
+  --history-surface-soft: #f6f7fb;
+  --history-accent: #4f46e5;
+  --history-accent-soft: rgba(79, 70, 229, 0.12);
+  --history-up: #0f7b47;
+  --history-down: #b42318;
+  --history-warning: #b45309;
+
+  box-sizing: border-box;
+  width: 100%;
+  /* #root 是 flex 列容器，不设 min-width:0 时会被内部表格的 min-width 撑破视口 */
+  min-width: 0;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+  color: var(--history-text);
+  font-size: 16px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.history-page *,
+.history-page *::before,
+.history-page *::after {
+  box-sizing: border-box;
+}
+
+/* 全站只有一套浅色主题（index.css 的 :root 固定浅色背景），
+   这里不再按 prefers-color-scheme 切换配色，避免深色系统下出现浅色文字配浅色背景。 */
+
+/* ---------- 页头 ---------- */
+
+.history-header {
+  margin-bottom: 24px;
+}
+
+.history-back {
+  margin-bottom: 18px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--history-accent);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.history-back:hover {
+  text-decoration: underline;
+}
+
+.history-back:focus-visible {
+  outline: 2px solid var(--history-accent);
+  outline-offset: 2px;
+}
+
+.history-header__eyebrow {
+  margin: 0 0 6px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--history-accent);
+}
+
+.history-page .history-header__title {
+  margin: 0 0 8px;
+  font-size: 30px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: var(--history-text);
+}
+
+.history-header__meta {
+  margin: 0;
+  font-size: 14px;
+  color: var(--history-muted);
+  overflow-wrap: anywhere;
+}
+
+.history-alert {
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--history-down);
+  border-radius: 8px;
+  background: var(--history-surface-soft);
+  font-size: 14px;
+  color: var(--history-text);
+}
+
+/* ---------- 按钮 ---------- */
+
+.history-button {
+  padding: 9px 18px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--history-accent);
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.history-button:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.history-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.history-button:focus-visible {
+  outline: 2px solid var(--history-accent);
+  outline-offset: 2px;
+}
+
+.history-button--ghost {
+  border-color: var(--history-border);
+  background: transparent;
+  color: var(--history-text);
+}
+
+.history-button--small {
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+/* ---------- 空态 / 错误态 ---------- */
+
+.history-state {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  border: 1px solid var(--history-border);
+  border-radius: 12px;
+  background: var(--history-surface);
+  text-align: center;
+}
+
+.history-page .history-state__title {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--history-text);
+}
+
+.history-state__message,
+.history-state__hint {
+  margin: 0;
+  font-size: 14px;
+  color: var(--history-muted);
+}
+
+.history-state__hint {
+  margin-top: 6px;
+}
+
+.history-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+/* ---------- 筛选 ---------- */
+
+.history-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 28px;
+  padding: 16px 18px;
+  border: 1px solid var(--history-border);
+  border-radius: 12px;
+  background: var(--history-surface);
+}
+
+.history-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.history-field__label {
+  font-size: 12px;
+  color: var(--history-muted);
+}
+
+.history-field select {
+  min-width: 132px;
+  max-width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--history-border);
+  border-radius: 8px;
+  background: var(--history-surface-soft);
+  color: var(--history-text);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.history-field select:focus-visible {
+  outline: 2px solid var(--history-accent);
+  outline-offset: 1px;
+}
+
+.history-filters__count {
+  margin: 0 0 7px auto;
+  font-size: 13px;
+  color: var(--history-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 岗位分组 ---------- */
+
+.history-group {
+  margin-bottom: 32px;
+}
+
+.history-group__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.history-page .history-group__title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--history-text);
+}
+
+.history-group__hint {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--history-muted);
+}
+
+.history-list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- 记录卡片 ---------- */
+
+.history-item {
+  display: grid;
+  gap: 8px;
+  padding: 16px 18px;
+  border: 1px solid var(--history-border);
+  border-radius: 12px;
+  background: var(--history-surface);
+}
+
+.history-item__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.history-badge {
+  padding: 1px 9px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.7;
+  white-space: nowrap;
+}
+
+.history-badge--submitted {
+  background: var(--history-accent-soft);
+  color: var(--history-accent);
+}
+
+.history-badge--in_progress {
+  border: 1px solid var(--history-border);
+  color: var(--history-muted);
+}
+
+.history-item__time {
+  margin: 0;
+  font-size: 13px;
+  color: var(--history-muted);
+  overflow-wrap: anywhere;
+}
+
+.history-item__score {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.history-item__score-label {
+  font-size: 13px;
+  color: var(--history-muted);
+}
+
+.history-item__score-value {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--history-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.history-item__version {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--history-muted);
+  overflow-wrap: anywhere;
+}
+
+.history-item__warning {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--history-surface-soft);
+  font-size: 13px;
+  color: var(--history-warning);
+}
+
+.history-item__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.history-select {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--history-muted);
+  cursor: pointer;
+}
+
+.history-select input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--history-accent);
+  cursor: pointer;
+}
+
+.history-select input:disabled {
+  cursor: not-allowed;
+}
+
+/* ---------- 对比区 ---------- */
+
+.history-compare {
+  margin-top: 8px;
+  padding: 20px;
+  border: 1px solid var(--history-border);
+  border-radius: 12px;
+  background: var(--history-surface);
+}
+
+.history-compare__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.history-page .history-compare__title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--history-text);
+}
+
+.history-compare__hint,
+.history-compare__blocked {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px dashed var(--history-border);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--history-muted);
+}
+
+.history-compare__blocked {
+  border-style: solid;
+  border-color: var(--history-warning);
+  color: var(--history-text);
+}
+
+.history-compare__body {
+  display: grid;
+  gap: 18px;
+}
+
+.history-compare__summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--history-muted);
+}
+
+.history-compare__charts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.history-compare__table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--history-border);
+  border-radius: 12px;
+  background: var(--history-surface);
+}
+
+.history-compare__table {
+  width: 100%;
+  min-width: 420px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.history-compare__table th,
+.history-compare__table td {
+  padding: 11px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--history-border);
+  font-variant-numeric: tabular-nums;
+}
+
+.history-compare__table thead th {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--history-muted);
+  background: var(--history-surface-soft);
+}
+
+.history-compare__table tbody th {
+  font-weight: 600;
+  color: var(--history-text);
+}
+
+.history-compare__table tbody tr:last-child th,
+.history-compare__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.history-compare__table-hint {
+  display: none;
+  margin: 0;
+  font-size: 12px;
+  color: var(--history-muted);
+}
+
+.history-delta {
+  font-weight: 600;
+}
+
+.history-delta--up {
+  color: var(--history-up);
+}
+
+.history-delta--down {
+  color: var(--history-down);
+}
+
+.history-delta--flat {
+  color: var(--history-muted);
+}
+
+.history-compare__limits {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--history-warning);
+}
+
+.history-compare__notice {
+  margin: 0;
+  padding: 12px 16px;
+  border-left: 3px solid var(--history-accent);
+  border-radius: 8px;
+  background: var(--history-surface-soft);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--history-muted);
+}
+
+/* ---------- 对比雷达图 ---------- */
+
+.compare-radar {
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--history-border);
+  border-radius: 12px;
+  background: var(--history-surface);
+}
+
+.compare-radar__svg {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.compare-radar__grid {
+  fill: none;
+  stroke: var(--history-border);
+  stroke-width: 1;
+}
+
+.compare-radar__axis {
+  stroke: var(--history-border);
+  stroke-width: 1;
+}
+
+.compare-radar__label {
+  fill: var(--history-muted);
+  font-size: 12px;
+}
+
+.compare-radar__area {
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.compare-radar__area--before {
+  fill: rgba(98, 108, 130, 0.14);
+  stroke: var(--history-muted);
+  stroke-dasharray: 6 4;
+}
+
+.compare-radar__area--after {
+  fill: var(--history-accent-soft);
+  stroke: var(--history-accent);
+}
+
+.compare-radar__dot--before {
+  fill: var(--history-muted);
+}
+
+.compare-radar__dot--after {
+  fill: var(--history-accent);
+}
+
+.compare-radar__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--history-muted);
+}
+
+.compare-radar__legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.compare-radar__swatch {
+  width: 12px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.compare-radar__swatch--before {
+  background: var(--history-muted);
+}
+
+.compare-radar__swatch--after {
+  background: var(--history-accent);
+}
+
+.compare-radar__note {
+  flex-basis: 100%;
+}
+
+/* ---------- 骨架屏 ---------- */
+
+.history-skeleton {
+  height: 96px;
+  margin-bottom: 14px;
+  border-radius: 12px;
+  background: linear-gradient(90deg, var(--history-surface-soft), var(--history-border), var(--history-surface-soft));
+  background-size: 200% 100%;
+  animation: history-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.history-skeleton--short {
+  height: 56px;
+  max-width: 320px;
+}
+
+@keyframes history-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .history-skeleton {
+    animation: none;
+  }
+}
+
+.history-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- 窄屏 ---------- */
+
+@media (max-width: 880px) {
+  .history-page {
+    padding: 28px 16px 56px;
+  }
+
+  .history-page .history-header__title {
+    font-size: 24px;
+  }
+
+  .history-filters {
+    gap: 12px;
+  }
+
+  .history-field {
+    flex: 1 1 140px;
+  }
+
+  .history-field select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .history-filters__count {
+    margin-left: 0;
+  }
+
+  .history-item__score-value {
+    font-size: 22px;
+  }
+
+  .history-compare__table-hint {
+    display: block;
+  }
+}

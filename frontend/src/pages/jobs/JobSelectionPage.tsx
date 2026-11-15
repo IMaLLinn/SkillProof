@@ -11,10 +11,12 @@ type JobSelectionPageProps = {
   onSelectRole: (roleId: string) => Promise<void>
   onStartAssessment: () => Promise<void>
   isStarting: boolean
+  onOpenHistory: () => void
 }
 
 export default function JobSelectionPage({
   user, logout, isLoggingOut, accountError, selectedRoleId, onSelectRole, onStartAssessment, isStarting,
+  onOpenHistory,
 }: JobSelectionPageProps) {
   const [catalog, setCatalog] = useState<Catalog | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -61,9 +63,19 @@ export default function JobSelectionPage({
     <main className="jobs-page">
       <div className="jobs-content">
         <p className="jobs-user">你好，{user.name}</p>
-        <button className="jobs-back" type="button" disabled={isLoggingOut || isSelecting || isStarting} onClick={logout}>
-          {isLoggingOut ? '退出中…' : '退出登录'}
-        </button>
+        <div className="jobs-links">
+          <button className="jobs-back" type="button" disabled={isLoggingOut || isSelecting || isStarting} onClick={logout}>
+            {isLoggingOut ? '退出中…' : '退出登录'}
+          </button>
+          <button
+            className="jobs-back"
+            type="button"
+            disabled={isLoggingOut || isSelecting || isStarting}
+            onClick={onOpenHistory}
+          >
+            历史测评记录
+          </button>
+        </div>
         {accountError && <p role="alert">{accountError}</p>}
         <p className="jobs-tag">SKILLPROOF · ALPHA</p>
         <h1>选择目标岗位</h1>
