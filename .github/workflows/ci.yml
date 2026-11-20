@@ -16,6 +16,8 @@ jobs:
     name: frontend-checks
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    outputs:
+      passed-tests: ${{ steps.tests.outputs.passed_tests }}
     defaults:
       run:
         working-directory: frontend
@@ -36,6 +38,14 @@ jobs:
         run: npm run lint
       - name: Type-check and build frontend
         run: npm run build
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13.9'
+      - name: Run frontend tests
+        id: tests
+        working-directory: .
+        run: python scripts/run_frontend_tests.py
 
   backend:
     name: backend-checks
@@ -120,6 +130,7 @@ jobs:
           FRONTEND_RESULT: ${{ needs.frontend.result }}
           BACKEND_RESULT: ${{ needs.backend.result }}
           PASSED_TESTS: ${{ needs.backend.outputs.passed-tests }}
+          FRONTEND_PASSED_TESTS: ${{ needs.frontend.outputs.passed-tests }}
           PR_DETAILS: ${{ runner.temp }}/skillproof-pr.json
           CHANGED_FILES: ${{ runner.temp }}/skillproof-changed-files
         run: |
