@@ -1,144 +1,87 @@
 # SkillProof
-大学生岗位基础能力画像与成长平台
 
+大学生岗位基础能力画像与成长平台。
 
+用户选择目标岗位后完成一次基础能力测评，系统自动评分，生成六维能力画像，指出薄弱项并推荐学习资源。本工具用于计算机基础知识自查，不预测就业、岗位胜任或招聘结果。
 
-## 当前阶段
+## 主要功能
 
-Alpha 阶段已建立前后端基础工程、SQLite 持久化、会话认证与岗位查询。
-
-Issue #9 提供独立评分函数和本人结果快照查询，已接入统一数据库与会话认证。测评创建、保存和提交由 T06 接入；函数契约、提交事务示例与验收边界见 [评分与结果接入说明](docs/design/scoring.md)。
-
-
+- 注册、登录与会话保持
+- 岗位选择（当前开放「后端开发」）
+- 在线测评：单选与多选题，保存答案后刷新或重新登录可继续作答
+- 自动评分：按难度加权计算综合分和六个维度得分
+- 能力画像：雷达图展示程序设计、算法基础、数据库、计算机网络、操作系统、软件工程六个维度，并标出薄弱项
+- 学习建议：按薄弱维度推荐学习资源
+- 历史记录：查看历次测评、复测，并对比同一岗位的两次结果
 
 ## 技术栈
 
 - 前端：React + TypeScript + Vite
-- 后端： Python + FastAPI
+- 后端：Python + FastAPI
 - 数据库：SQLite
-
-
 
 ## 项目结构
 
 ```text
 frontend/       前端工程
-backend/        后端工程
+backend/        后端工程（接口、评分、题库内容）
 docs/
-  scrum/        Scrum 记录
   design/       设计文档
   testing/      测试文档
-  images/       项目图片
-tests/          项目级测试
+  scrum/        Scrum 记录
+scripts/        测试运行与本地维护脚本
+tests/          验收清单
 ```
-
-
-
-## 开发环境
-
-Python：**3.13.9**
-
-Node.js：**v24.12.0**
-
-npm：**11.6.2**
-
-
 
 ## 快速启动
 
-以下命令均在仓库根目录使用powershell执行
+开发环境：Python 3.13.9、Node.js v24.12.0、npm 11.6.2。以下命令均在仓库根目录使用 PowerShell 执行。
 
-### 前端依赖
+### 1. 安装依赖
 
 ```powershell
 Set-Location frontend
 npm ci
 Set-Location ..
-```
 
-### 后端依赖
-
-```powershell
 python -m venv backend/.venv
 .\backend\.venv\Scripts\python.exe -m pip install -r backend/requirements.txt
 ```
 
-### 本地配置
+### 2. 本地配置
 
-首次运行时复制配置文件：
+首次运行时复制配置文件。`.env` 只用于本地，不提交到 Git。
 
 ```powershell
 Copy-Item .env.example .env
 ```
 
-`.env` 用于本地配置，不提交到 Git。
-`APP_NAME` 用于设置后端接口文档中的应用名称。
-
-分别打开两个终端，均从仓库根目录开始。
-
-### 后端
+### 3. 启动后端
 
 ```powershell
 .\backend\.venv\Scripts\python.exe -m uvicorn app.main:app --app-dir backend --reload --host 127.0.0.1 --port 8000 --env-file .env
 ```
 
-- 健康检查：http://127.0.0.1:8000/api/health
-- 接口文档：http://127.0.0.1:8000/docs
+接口文档：http://127.0.0.1:8000/docs
 
-### 前端
+### 4. 启动前端
+
+另开一个终端，从仓库根目录执行：
 
 ```powershell
 Set-Location frontend
 npm run dev
 ```
 
-访问终端显示的本地地址，通常为 http://localhost:5173。
+浏览器打开 http://localhost:5173 。
 
+## 文档
 
-
-## 检查与构建
-
-新开终端，从仓库根目录执行
-
-```powershell
-Set-Location frontend
-npm run lint
-npm run build
-```
-
-后端运行时，另开终端检查：
-
-```powershell
-Invoke-RestMethod http://127.0.0.1:8000/api/health
-```
-
-预期返回 `Status: ok`。
-
-### 后端评分与结果测试
-
-从仓库根目录执行（测试只使用临时 SQLite 文件，不写入业务数据库）：
-
-```powershell
-.\backend\.venv\Scripts\python.exe -m pip install -r backend/requirements-test.txt
-$env:PYTHONPATH = 'backend'
-.\backend\.venv\Scripts\python.exe -m unittest discover -s backend/tests -v
-```
-
-测试运行方式、覆盖范围与人工验收入口见 [测试指南](docs/testing/README.md)。
-
-## 题库更新与本地数据
-
-后端启动时自动校验并按版本同步仓库题库。新增题目使用新 ID；修改内容或发布/归档状态时增加题目 `version`，同时增加 manifest 的 `bankVersion` 并更新题数和文件 SHA-256。旧草稿库会自动升级，已有账号、测评及报告保留；同版本内容冲突或版本回退会中止启动，避免静默覆盖。
-
-仅需清空本地测试数据时，先停止后端，从仓库根目录执行（自动保留旧库备份）：
-
-```powershell
-.\backend\.venv\Scripts\python.exe -X utf8 scripts/reset_local_db.py --yes
-```
-
-该命令读取 `.env` 和进程环境变量，可用 `--db-path` 明确指定目标；输出重置的绝对路径及备份位置。它会清空账号、会话和全部测评，只允许 development 环境。普通题库更新不需要重置。完整规则见 [题库同步与本地重置](docs/testing/question-bank-sync.md)。
-
-## 协作方式
-
-先建立 Issue，再创建对应分支开发。
-完成自测后提交 PR，至少经另一名成员批准（Approve），再由其他成员合并到 main。
+- [测试指南](docs/testing/README.md)：自动化测试、本地检查与 CI 说明
+- [API 契约](docs/design/api.md)
+- [数据库设计](docs/design/database.md)
+- [评分与结果快照](docs/design/scoring.md)
+- [后端开发能力树](docs/design/ability-tree.md)
+- [题库同步与本地重置](docs/testing/question-bank-sync.md)
+- [Alpha 测试报告](docs/testing/alpha-test-report.md)
+- [协作指南](CONTRIBUTING.md)

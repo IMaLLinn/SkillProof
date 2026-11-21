@@ -2,6 +2,16 @@
 
 本目录保留团队可重复执行的测试方法、验收标准和题库发布依据。测试代码位于 `backend/tests/` 和 `frontend/tests/`，测试运行和 CI 检查工具位于 `scripts/`。
 
+## 本地运行检查
+
+按根目录 README 启动后端后，另开终端执行：
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/api/health
+```
+
+预期返回 `Status: ok`。接口文档位于 http://127.0.0.1:8000/docs 。
+
 ## 自动化测试
 
 按根目录 README 准备 Python 环境，在仓库根目录 PowerShell 执行：
