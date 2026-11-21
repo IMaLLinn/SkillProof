@@ -51,7 +51,7 @@ npm test
 
 `backend-checks` 调用 `scripts/run_backend_tests.py` 执行后端测试。`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试。两个任务都输出本轮通过的测试 ID。
 
-`qa-checks` 根据 PR 描述中的 `Closes #编号` 或 `Refs #编号` 读取 `tests/acceptance/issues/编号.json`，以本轮前后端通过 ID 的并集核对 `required_tests`。前端 ID 由仓库相对路径、各层 `describe` 标题和测试标题组成，以 ` > ` 分隔，例如 `frontend/tests/historyUtils.test.ts > historyUtils > compares two reports`。
+`qa-checks` 根据 PR 描述中的 `Closes #编号` 或 `Refs #编号` 读取 `tests/acceptance/issues/编号.json`，检查清单里的每个测试是否在本轮前端或后端测试中通过。前端 ID 由仓库相对路径、各层 `describe` 标题和测试标题组成，以 ` > ` 分隔，例如 `frontend/tests/historyUtils.test.ts > historyUtils > compares two reports`。
 
 测试文件只允许放在 `backend/tests/test_*.py` 或 `frontend/tests/`（含子目录，文件名为 `*.test.ts` 或 `*.test.tsx`）。PR 变更中，文件名匹配 `test_*.py`、`*_test.py`、`*.test.*` 或 `*.spec.*`，但不符合上述目录和命名要求，CI 会报错。
 
