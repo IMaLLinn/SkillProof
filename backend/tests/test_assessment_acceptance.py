@@ -25,7 +25,6 @@ class AssessmentAcceptanceTests(unittest.TestCase):
         directory = Path(self.enterContext(TemporaryDirectory()))
         content = directory / "content"
         content.mkdir()
-        # This isolated bank has exactly the agreed two easy and one medium per dimension.
         tree = {
             "role": {"id": "backend", "name": "后端开发", "description": "流程验收测试岗位"},
             "dimensions": [
@@ -127,7 +126,7 @@ class AssessmentAcceptanceTests(unittest.TestCase):
             ), answers)
             self.assertEqual(saved["answersVersion"], 1)
 
-        # A fresh app and login must recover the same draft from the temporary database.
+        # 重新登录，检查上次保存的草稿。
         with self.client() as client:
             logged_in = client.post("/api/auth/login", json=credentials)
             self.assertEqual(logged_in.status_code, 200, logged_in.text)

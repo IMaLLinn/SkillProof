@@ -1,5 +1,30 @@
 {
   "required_tests": [
-    "test_assessments.AssessmentTests.test_new_attempt_after_submit_preserves_old_report_and_tracks_reuse"
+    "test_assessments.AssessmentTests.test_new_attempt_after_submit_preserves_old_report_and_tracks_reuse",
+    "frontend/tests/HistoryPage.test.tsx > HistoryPage > compares all six dimensions when two same-role attempts are selected",
+    "frontend/tests/HistoryPage.test.tsx > HistoryPage > hides differences and explains mismatched scoring rules",
+    "frontend/tests/HistoryPage.test.tsx > HistoryPage > resumes an in-progress attempt without offering comparison",
+    "frontend/tests/HistoryPage.test.tsx > HistoryPage > shows the API error message when retesting fails",
+    "frontend/tests/HistoryPage.test.tsx > HistoryPage > shows the empty history state",
+    "frontend/tests/HistoryPage.test.tsx > HistoryPage > warns about a missing score snapshot and hides its report and comparison actions",
+    "frontend/tests/historyApi.test.ts > fetchHistory > maps 401 to unauthorized and announces the expired session",
+    "frontend/tests/historyApi.test.ts > fetchHistory > maps a rejected fetch to a network error",
+    "frontend/tests/historyApi.test.ts > fetchHistory > rejects a snapshot with only five dimensions",
+    "frontend/tests/historyApi.test.ts > fetchHistory > rejects a submitted attempt without a report ID",
+    "frontend/tests/historyApi.test.ts > fetchHistory > rejects an in-progress attempt with a score",
+    "frontend/tests/historyApi.test.ts > fetchHistory > rejects duplicate attempt IDs",
+    "frontend/tests/historyApi.test.ts > fetchHistory > returns valid history from the authenticated endpoint",
+    "frontend/tests/historyUtils.test.ts > historyUtils > blocks an in-progress attempt",
+    "frontend/tests/historyUtils.test.ts > historyUtils > blocks attempts from different roles",
+    "frontend/tests/historyUtils.test.ts > historyUtils > blocks comparing an attempt with itself",
+    "frontend/tests/historyUtils.test.ts > historyUtils > blocks incomplete dimension snapshots",
+    "frontend/tests/historyUtils.test.ts > historyUtils > counts only comparable records in each role",
+    "frontend/tests/historyUtils.test.ts > historyUtils > disables differences when blueprint rules differ",
+    "frontend/tests/historyUtils.test.ts > historyUtils > disables differences when scoring rules differ",
+    "frontend/tests/historyUtils.test.ts > historyUtils > orders attempts chronologically regardless of argument order",
+    "frontend/tests/historyUtils.test.ts > historyUtils > rounds after-minus-before deltas and formats positive negative and flat values",
+    "frontend/tests/historyUtils.test.ts > historyUtils > warns about an unknown question bank instead of a version mismatch",
+    "frontend/tests/historyUtils.test.ts > historyUtils > warns about different known question banks without disabling differences",
+    "frontend/tests/historyUtils.test.ts > historyUtils > warns about reused questions without disabling differences"
   ]
 }

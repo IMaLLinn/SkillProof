@@ -4,6 +4,10 @@
     "test_recommendations.RecommendationTests.test_matches_saved_report_order_and_includes_third_place_ties",
     "test_recommendations.RecommendationTests.test_no_resources_and_full_score_return_empty",
     "test_recommendations.RecommendationTests.test_requires_login_ownership_and_submitted_result",
-    "test_recommendations.RecommendationTests.test_unavailable_resources_do_not_block_submission_or_report"
+    "test_recommendations.RecommendationTests.test_unavailable_resources_do_not_block_submission_or_report",
+    "frontend/tests/LearningRecommendations.test.tsx > LearningRecommendations > rejects a payload containing a non-HTTPS resource URL",
+    "frontend/tests/LearningRecommendations.test.tsx > LearningRecommendations > renders group headings and resource links that open in new tabs",
+    "frontend/tests/LearningRecommendations.test.tsx > LearningRecommendations > shows a load error and renders resources after a successful retry",
+    "frontend/tests/LearningRecommendations.test.tsx > LearningRecommendations > shows the empty message when there are no recommendations"
   ]
 }

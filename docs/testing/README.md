@@ -1,6 +1,6 @@
 # 测试指南
 
-本目录保留团队可重复执行的测试方法、验收标准和题库发布依据。测试代码位于 `backend/tests/`，测试运行和 CI 检查工具位于 `scripts/`。
+本目录保留团队可重复执行的测试方法、验收标准和题库发布依据。测试代码位于 `backend/tests/` 和 `frontend/tests/`，测试运行和 CI 检查工具位于 `scripts/`。
 
 ## 自动化测试
 
@@ -37,13 +37,27 @@ $env:PYTHONPATH = 'backend'
 Set-Location frontend
 npm run lint
 npm run build
+npm test
 ```
+
+| 测试文件 | 持续验证的行为 |
+|---|---|
+| `historyUtils.test.ts` | 历史对比计算与限制 |
+| `historyApi.test.ts` | 历史接口数据校验 |
+| `HistoryPage.test.tsx` | 历史页面展示与交互 |
+| `LearningRecommendations.test.tsx` | 学习建议展示与失败重试 |
 
 ## CI 与必测清单
 
-GitHub Actions 的 `backend-checks` 调用 `scripts/run_backend_tests.py`，执行完整后端套件并输出成功的测试 ID。`qa-checks` 调用 `scripts/check_qa.py`，根据 PR 描述中的 `Closes #编号` 或 `Refs #编号`，核对 `tests/acceptance/issues/编号.json` 中登记的用例是否实际成功运行。
+`backend-checks` 调用 `scripts/run_backend_tests.py` 执行后端测试。`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试。两个任务都输出本轮通过的测试 ID。
 
-新增或调整功能时同步维护对应 Issue 的 `required_tests`。CI 检查器需要工作流提供 PR 元数据、变更文件及本轮测试结果，不能用历史日志替代，也不支持旧的 `--pr` 调用方式。
+`qa-checks` 根据 PR 描述中的 `Closes #编号` 或 `Refs #编号` 读取 `tests/acceptance/issues/编号.json`，检查清单里的每个测试是否在本轮前端或后端测试中通过。前端 ID 由仓库相对路径、各层 `describe` 标题和测试标题组成，以 ` > ` 分隔，例如 `frontend/tests/historyUtils.test.ts > historyUtils > compares two reports`。
+
+测试文件只允许放在 `backend/tests/test_*.py` 或 `frontend/tests/`（含子目录，文件名为 `*.test.ts` 或 `*.test.tsx`）。PR 变更中，文件名匹配 `test_*.py`、`*_test.py`、`*.test.*` 或 `*.spec.*`，但不符合上述目录和命名要求，CI 会报错。
+
+新增或调整功能时同步维护对应 Issue 的 `required_tests`。允许登记已有测试。如果 PR 修改了 `frontend/src/` 或 `backend/app/`，却没有登记对应层的测试，CI 会给出不阻断的审查提示，由审查者判断覆盖是否充分。
+
+CI 检查器需要工作流提供 PR 元数据、变更文件及本轮测试结果，不能用历史日志替代，也不支持旧的 `--pr` 调用方式。
 
 ## 人工验收与题库维护
 
