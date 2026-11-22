@@ -1,13 +1,18 @@
 """Account and catalog acceptance through the real API and an isolated database."""
 
+from contextlib import closing
+from dataclasses import replace
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
 from app.config import Settings
+from app.db import connect
 from app.main import create_app
+from app.security import PASSWORD_HASHER, password_matches
 
 
 PASSWORD = "acceptance-test-password"
@@ -24,8 +29,9 @@ class AccountAcceptanceTests(unittest.TestCase):
             origin="http://testserver",
         )
 
-    def client(self):
-        return TestClient(create_app(self.settings), headers={"Origin": "http://testserver"})
+    def client(self, **settings_overrides):
+        settings = replace(self.settings, **settings_overrides)
+        return TestClient(create_app(settings), headers={"Origin": "http://testserver"})
 
     def register(self, client, email="qa@example.invalid"):
         response = client.post("/api/auth/register", json={
@@ -73,6 +79,65 @@ class AccountAcceptanceTests(unittest.TestCase):
             self.assertEqual(login.status_code, 200, login.text)
             self.assertEqual(login.json()["user"], original)
 
+    def test_registration_replaces_and_revokes_the_previous_session(self):
+        with self.client() as client, self.client() as replay:
+            previous = self.register(client)["user"]
+            replay.cookies.update(dict(client.cookies))
+            before = replay.get("/api/auth/me")
+            self.assertEqual(before.status_code, 200, before.text)
+            self.assertEqual(before.json()["user"], previous)
+
+            current = self.register(client, "next@example.invalid")["user"]
+            self.assertNotEqual(current["id"], previous["id"])
+            me = client.get("/api/auth/me")
+            self.assertEqual(me.status_code, 200, me.text)
+            self.assertEqual(me.json()["user"], current)
+            rejected = replay.get("/api/auth/me")
+            self.assertEqual(rejected.status_code, 401, rejected.text)
+
+    def test_login_rejects_account_changes_after_password_verification(self):
+        for change in ("password", "delete"):
+            with self.subTest(change=change), self.client() as client:
+                user = self.register(client, f"{change}@example.invalid")["user"]
+                client.cookies.clear()
+
+                def verify_then_change_account(hashed, password):
+                    matches = password_matches(hashed, password)
+                    self.assertTrue(matches)
+                    with closing(connect(self.settings)) as con:
+                        if change == "delete":
+                            con.execute("DELETE FROM users WHERE id=?", (user["id"],))
+                        else:
+                            new_hash = PASSWORD_HASHER.hash("replacement passphrase")
+                            con.execute("UPDATE users SET password_hash=? WHERE id=?", (new_hash, user["id"]))
+                    return matches
+
+                with patch("app.api_auth.password_matches", side_effect=verify_then_change_account):
+                    response = client.post("/api/auth/login", json={"email": user["email"], "password": PASSWORD})
+                self.assertEqual(response.status_code, 409, response.text)
+                self.assertEqual(response.json(), {"detail": "账户状态已变化，请重新登录"})
+                self.assertNotIn("set-cookie", response.headers)
+
+    def test_login_rate_limit_returns_retry_after(self):
+        with self.client(login_limit=1) as client:
+            payload = {"email": "missing@example.invalid", "password": PASSWORD}
+            self.assertEqual(client.post("/api/auth/login", json=payload).status_code, 401)
+
+            response = client.post("/api/auth/login", json=payload)
+            self.assertEqual(response.status_code, 429, response.text)
+            self.assertIn("retry-after", response.headers)
+            self.assertIn(int(response.headers["retry-after"]), range(1, self.settings.rate_window_seconds + 1))
+
+    def test_registration_rate_limit_returns_retry_after(self):
+        with self.client(register_limit=1) as client:
+            self.register(client)
+            response = client.post("/api/auth/register", json={
+                "email": "next@example.invalid", "name": "验收账号", "password": PASSWORD,
+            })
+            self.assertEqual(response.status_code, 429, response.text)
+            self.assertIn("retry-after", response.headers)
+            self.assertIn(int(response.headers["retry-after"]), range(1, self.settings.rate_window_seconds + 1))
+
     def test_logout_requires_own_csrf_and_revokes_only_own_session(self):
         with self.client() as alice, self.client() as bob:
             first = self.register(alice, "alice@example.invalid")
@@ -100,6 +165,22 @@ class AccountAcceptanceTests(unittest.TestCase):
                     self.assertEqual(client.get("/api/auth/me").status_code, 401)
             registered = self.register(client)
             self.assertEqual(registered["user"]["role"], "student")
+
+    def test_registration_rejects_invalid_email_and_password(self):
+        cases = (
+            ("consecutive dots", "email", "qa..test@example.invalid"),
+            ("long local part", "email", "a" * 65 + "@example.invalid"),
+            ("whitespace only", "password", " " * 15),
+            ("over 512 UTF-8 bytes", "password", "🔒" * 129),
+        )
+        with self.client() as client:
+            payload = {"email": "qa@example.invalid", "name": "验收账号", "password": PASSWORD}
+            for case, field, value in cases:
+                with self.subTest(case=case):
+                    response = client.post("/api/auth/register", json={**payload, field: value})
+                    self.assertEqual(response.status_code, 422, response.text)
+                    errors = response.json()["detail"]["errors"]
+                    self.assertEqual([error["field"] for error in errors], [f"body.{field}"])
 
     def test_account_survives_application_recreation(self):
         with self.client() as client:

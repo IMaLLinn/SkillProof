@@ -1,0 +1,18 @@
+{
+  "required_tests": [
+    "test_account_acceptance.AccountAcceptanceTests.test_login_rate_limit_returns_retry_after",
+    "test_account_acceptance.AccountAcceptanceTests.test_login_rejects_account_changes_after_password_verification",
+    "test_account_acceptance.AccountAcceptanceTests.test_registration_rate_limit_returns_retry_after",
+    "test_account_acceptance.AccountAcceptanceTests.test_registration_rejects_invalid_email_and_password",
+    "test_account_acceptance.AccountAcceptanceTests.test_registration_replaces_and_revokes_the_previous_session",
+    "test_assessments.AssessmentTests.test_history_keeps_other_rows_when_a_legacy_report_is_damaged",
+    "test_assessments.AssessmentTests.test_unknown_closed_and_client_owned_fields_rejected",
+    "test_auth_catalog.AuthCatalogTests.test_malformed_origin_and_origin_with_path_or_userinfo_are_rejected",
+    "test_auth_catalog.AuthCatalogTests.test_origin_host_and_request_limit",
+    "test_input_models.InputModelTests.test_profile_rejects_unknown_target_role",
+    "test_request_guard.RequestGuardTests.test_cumulative_size_of_chunked_body_returns_413",
+    "test_request_guard.RequestGuardTests.test_invalid_and_negative_content_length_returns_400",
+    "test_request_guard.RequestGuardTests.test_oversized_body_without_content_length_returns_413",
+    "test_request_guard.RequestGuardTests.test_secure_cookie_mode_sets_hsts"
+  ]
+}
