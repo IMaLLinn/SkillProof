@@ -1,4 +1,7 @@
-"""Run the frontend suite and publish the IDs of tests that passed."""
+"""Run the frontend suite and publish the IDs of tests that passed.
+
+Extra arguments, such as --coverage, are passed to Vitest.
+"""
 
 import json
 import os
@@ -30,7 +33,7 @@ def main():
         with tempfile.TemporaryDirectory() as directory:
             report_path = Path(directory) / "vitest.json"
             subprocess.run(
-                [npx, "vitest", "run", "--reporter=json", f"--outputFile={report_path}"],
+                [npx, "vitest", "run", "--reporter=json", f"--outputFile={report_path}", *sys.argv[1:]],
                 cwd=root / "frontend",
                 check=True,
             )

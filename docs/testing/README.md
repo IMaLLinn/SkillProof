@@ -57,9 +57,34 @@ npm test
 | `HistoryPage.test.tsx` | 历史页面展示与交互 |
 | `LearningRecommendations.test.tsx` | 学习建议展示与失败重试 |
 
+## 覆盖率报告
+
+覆盖率只作参考，不设最低要求，高低不影响 CI 结果。报告文件已被 Git 忽略，不要提交。
+
+后端统计 `backend/app/` 的语句覆盖率和分支覆盖率。在仓库根目录 PowerShell 执行：
+
+```powershell
+$env:PYTHONPATH = 'backend'
+.\backend\.venv\Scripts\python.exe -X utf8 -m coverage run scripts/run_backend_tests.py
+.\backend\.venv\Scripts\python.exe -m coverage html
+.\backend\.venv\Scripts\python.exe -m coverage json
+.\backend\.venv\Scripts\python.exe -X utf8 scripts/report_coverage.py backend
+```
+
+最后一条命令分别列出语句覆盖率和分支覆盖率。`coverage report` 和网页报告里的 `Cover` 列是两者合并计算的结果，不要当作语句覆盖率。网页报告位于 `htmlcov/index.html`，未执行的代码行标红，只执行了部分分支的行标黄。
+
+前端统计 `frontend/src/` 的语句、分支、函数和行覆盖率：
+
+```powershell
+Set-Location frontend
+npm run coverage
+```
+
+终端末尾列出各项百分比，网页报告位于 `frontend/coverage/index.html`，未执行的代码行同样标红。
+
 ## CI 与必测清单
 
-`backend-checks` 调用 `scripts/run_backend_tests.py` 执行后端测试。`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试。两个任务都输出本轮通过的测试 ID。
+`backend-checks` 调用 `scripts/run_backend_tests.py` 执行后端测试。`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试。两个任务都输出本轮通过的测试 ID，并在 GitHub Actions 运行页的摘要（Summary）中列出覆盖率。完整的网页报告作为附件（Artifacts）`backend-coverage` 和 `frontend-coverage` 挂在同一运行页底部，保留 14 天，下载解压后打开其中的 `index.html` 即可查看。
 
 `qa-checks` 根据 PR 描述中的 `Closes #编号` 或 `Refs #编号` 读取 `tests/acceptance/issues/编号.json`，检查清单里的每个测试是否在本轮前端或后端测试中通过。前端 ID 由仓库相对路径、各层 `describe` 标题和测试标题组成，以 ` > ` 分隔，例如 `frontend/tests/historyUtils.test.ts > historyUtils > compares two reports`。
 

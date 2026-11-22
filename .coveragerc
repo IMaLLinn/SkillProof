@@ -1,0 +1,9 @@
+[run]
+branch = True
+source = backend/app
+
+[html]
+directory = htmlcov
+
+[json]
+output = htmlcov/coverage.json
