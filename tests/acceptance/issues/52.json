@@ -1,0 +1,7 @@
+{
+  "required_tests": [
+    "test_qa_checks.QACheckTests.test_registered_test_passes_when_it_runs_successfully",
+    "test_qa_checks.FrontendRunnerTests.test_vitest_report_builds_ids_for_passing_tests",
+    "test_qa_checks.FrontendRunnerTests.test_failed_vitest_assertion_rejects_report"
+  ]
+}

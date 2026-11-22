@@ -8,7 +8,8 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
-.coverage*
+.coverage
+.coverage.*
 htmlcov/
 
 # 前端

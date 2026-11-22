@@ -45,7 +45,18 @@ jobs:
       - name: Run frontend tests
         id: tests
         working-directory: .
-        run: python scripts/run_frontend_tests.py
+        run: python scripts/run_frontend_tests.py --coverage
+      - name: Report frontend coverage
+        working-directory: .
+        continue-on-error: true
+        run: python scripts/report_coverage.py frontend
+      - name: Upload frontend coverage report
+        continue-on-error: true
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: frontend-coverage
+          path: frontend/coverage/
+          retention-days: 14
 
   backend:
     name: backend-checks
@@ -76,7 +87,20 @@ jobs:
         id: tests
         env:
           SKILLPROOF_DB_PATH: ${{ runner.temp }}/skillproof-tests.sqlite3
-        run: python scripts/run_backend_tests.py
+        run: python -m coverage run scripts/run_backend_tests.py
+      - name: Report backend coverage
+        continue-on-error: true
+        run: |
+          python -m coverage html -q
+          python -m coverage json -q
+          python scripts/report_coverage.py backend
+      - name: Upload backend coverage report
+        continue-on-error: true
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: backend-coverage
+          path: htmlcov/
+          retention-days: 14
       - name: Start API and check health
         env:
           SKILLPROOF_DB_PATH: ${{ runner.temp }}/skillproof-health.sqlite3
