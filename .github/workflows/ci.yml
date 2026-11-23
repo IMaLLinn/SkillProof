@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 2
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -46,11 +47,30 @@ jobs:
         id: tests
         working-directory: .
         run: python scripts/run_frontend_tests.py --coverage
-      - name: Report frontend coverage
+      - name: Measure main frontend coverage baseline
         working-directory: .
-        continue-on-error: true
-        run: python scripts/report_coverage.py frontend
+        run: |
+          baseline="$RUNNER_TEMP/main-frontend-baseline"
+          trap '[ -L "$baseline/frontend/node_modules" ] && rm -f "$baseline/frontend/node_modules"; git worktree remove --force "$baseline" 2>/dev/null || true' EXIT
+          git worktree add --detach "$baseline" HEAD^1
+          if cmp -s frontend/package-lock.json "$baseline/frontend/package-lock.json"; then
+            ln -s "$GITHUB_WORKSPACE/frontend/node_modules" "$baseline/frontend/node_modules"
+          else
+            (cd "$baseline/frontend" && npm ci)
+          fi
+          (
+            cd "$baseline/frontend"
+            npx --no-install vitest run --coverage --coverage.reporter=json-summary --coverage.reportsDirectory="$RUNNER_TEMP/main-frontend-coverage"
+          )
+      - name: Check frontend coverage gate
+        working-directory: .
+        run: |
+          python scripts/report_coverage.py frontend \
+            --baseline "$RUNNER_TEMP/main-frontend-coverage/coverage-summary.json" \
+            --diff-base HEAD^1 \
+            --check
       - name: Upload frontend coverage report
+        if: ${{ !cancelled() && steps.tests.outcome == 'success' }}
         continue-on-error: true
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
@@ -73,6 +93,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          fetch-depth: 2
       - name: Set up Python
         uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
@@ -88,13 +109,39 @@ jobs:
         env:
           SKILLPROOF_DB_PATH: ${{ runner.temp }}/skillproof-tests.sqlite3
         run: python -m coverage run scripts/run_backend_tests.py
-      - name: Report backend coverage
-        continue-on-error: true
+      - name: Generate backend coverage reports
+        id: coverage_reports
         run: |
           python -m coverage html -q
           python -m coverage json -q
-          python scripts/report_coverage.py backend
+      - name: Measure main backend coverage baseline
+        run: |
+          baseline="$RUNNER_TEMP/main-backend-baseline"
+          baseline_venv="$RUNNER_TEMP/main-backend-venv"
+          trap 'git worktree remove --force "$baseline" 2>/dev/null || true; rm -rf "$baseline_venv"' EXIT
+          git worktree add --detach "$baseline" HEAD^1
+          baseline_python="python"
+          if ! cmp -s backend/requirements.txt "$baseline/backend/requirements.txt" || ! cmp -s backend/requirements-test.txt "$baseline/backend/requirements-test.txt"; then
+            python -m venv "$baseline_venv"
+            baseline_python="$baseline_venv/bin/python"
+            "$baseline_python" -m pip install -r "$baseline/backend/requirements-test.txt"
+          fi
+          (
+            cd "$baseline"
+            PYTHONPATH="$baseline/backend" \
+            SKILLPROOF_DB_PATH="$RUNNER_TEMP/skillproof-main-tests.sqlite3" \
+            GITHUB_OUTPUT="" \
+            "$baseline_python" -m coverage run --data-file="$RUNNER_TEMP/main-backend.coverage" scripts/run_backend_tests.py
+            "$baseline_python" -m coverage json --data-file="$RUNNER_TEMP/main-backend.coverage" -o "$RUNNER_TEMP/main-backend-coverage.json" -q
+          )
+      - name: Check backend coverage gate
+        run: |
+          python scripts/report_coverage.py backend \
+            --baseline "$RUNNER_TEMP/main-backend-coverage.json" \
+            --diff-base HEAD^1 \
+            --check
       - name: Upload backend coverage report
+        if: ${{ !cancelled() && steps.coverage_reports.outcome == 'success' }}
         continue-on-error: true
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

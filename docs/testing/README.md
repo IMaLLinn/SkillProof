@@ -40,6 +40,7 @@ $env:PYTHONPATH = 'backend'
 | `test_question_bank_sync.py` | 旧草稿升级、题库增改归档、版本冲突及快照保护 |
 | `test_reset_local_db.py` | 本地重置确认、环境限制、备份和失败保护 |
 | `test_qa_checks.py` | CI 运行器及 Issue 必测清单检查逻辑 |
+| `test_coverage_report.py` | 分层覆盖率门禁、防回退与改动代码覆盖率提醒检查逻辑 |
 
 前端检查：
 
@@ -57,34 +58,48 @@ npm test
 | `HistoryPage.test.tsx` | 历史页面展示与交互 |
 | `LearningRecommendations.test.tsx` | 学习建议展示与失败重试 |
 
-## 覆盖率报告
+## 覆盖率标准与报告
 
-覆盖率只作参考，不设最低要求，高低不影响 CI 结果。报告文件已被 Git 忽略，不要提交。
+PR 对应的前端、后端、QA 三项 CI 检查必须全部通过。覆盖率按层设置门槛，报告文件已被 Git 忽略，不要提交：
+
+| 范围 | 统计指标 | 固定底线 | 防回退规则 | 未达标处理 |
+|---|---|---|---|---|
+| 后端（`backend/app/`） | 语句 / 分支 | 语句 ≥ 90%，分支 ≥ 80% | 不低于 `main`（允许 0.5 个百分点波动） | 阻断合并 |
+| 前端逻辑层（`frontend/src/lib/*`、`frontend/src/api.ts`、`frontend/src/authValidation.ts`） | 语句 / 分支 | 语句 ≥ 85%，分支 ≥ 80% | 不低于 `main`（允许 0.5 个百分点波动） | 阻断合并 |
+| 前端页面与组件层（`frontend/src/pages/*`、`frontend/src/components/*`、`App.tsx`、`main.tsx`） | 语句 / 分支 | 不设总百分比门槛 | 仅输出参考数据，已有组件测试须全部通过 | 不阻断 |
+| 本次 PR 改动代码（后端 + 前端逻辑层） | 新增/修改语句 | 建议 ≥ 80% | — | CI 警告提醒，暂不阻断 |
+
+约定与边界：
+
+- 前端计算、表单校验与数据整理逻辑统一抽离到逻辑层 `.ts`，避免塞进 `.tsx` 页面文件绕过覆盖率检查。
+- 纯展示页面不凑覆盖率，复杂交互规则按需补充组件测试；视觉样式与完整主流程（登录 → 选岗 → 答题 → 提交 → 查看报告）本阶段暂不引入浏览器自动化，继续按验收清单人工验证。
 
 后端统计 `backend/app/` 的语句覆盖率和分支覆盖率。在仓库根目录 PowerShell 执行：
 
 ```powershell
 $env:PYTHONPATH = 'backend'
 .\backend\.venv\Scripts\python.exe -X utf8 -m coverage run scripts/run_backend_tests.py
-.\backend\.venv\Scripts\python.exe -m coverage html
-.\backend\.venv\Scripts\python.exe -m coverage json
-.\backend\.venv\Scripts\python.exe -X utf8 scripts/report_coverage.py backend
+.\backend\.venv\Scripts\python.exe -X utf8 -m coverage html
+.\backend\.venv\Scripts\python.exe -X utf8 -m coverage json
+.\backend\.venv\Scripts\python.exe -X utf8 scripts/report_coverage.py backend --check
 ```
 
-最后一条命令分别列出语句覆盖率和分支覆盖率。`coverage report` 和网页报告里的 `Cover` 列是两者合并计算的结果，不要当作语句覆盖率。网页报告位于 `htmlcov/index.html`，未执行的代码行标红，只执行了部分分支的行标黄。
+最后一条命令分别列出语句覆盖率和分支覆盖率，并校验固定底线；附加 `--baseline <main报告>` 和 `--diff-base <基线提交>` 可在本地模拟 CI 的防回退与改动代码检查。`coverage report` 和网页报告里的 `Cover` 列是语句与分支合并计算的结果，不要当作语句覆盖率。网页报告位于 `htmlcov/index.html`，未执行的代码行标红，只执行了部分分支的行标黄。
 
-前端统计 `frontend/src/` 的语句、分支、函数和行覆盖率：
+前端统计 `frontend/src/` 的分层和整体覆盖率：
 
 ```powershell
 Set-Location frontend
 npm run coverage
+Set-Location ..
+.\backend\.venv\Scripts\python.exe -X utf8 scripts/report_coverage.py frontend --check
 ```
 
-终端末尾列出各项百分比，网页报告位于 `frontend/coverage/index.html`，未执行的代码行同样标红。
+`npm run coverage` 会在终端输出各文件覆盖率并生成 `frontend/coverage/index.html`、`coverage-summary.json` 与 `coverage-final.json`；`report_coverage.py frontend --check` 会拆分逻辑层与页面/组件层并校验逻辑层底线。
 
 ## CI 与必测清单
 
-`backend-checks` 调用 `scripts/run_backend_tests.py` 执行后端测试。`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试。两个任务都输出本轮通过的测试 ID，并在 GitHub Actions 运行页的摘要（Summary）中列出覆盖率。完整的网页报告作为附件（Artifacts）`backend-coverage` 和 `frontend-coverage` 挂在同一运行页底部，保留 14 天，下载解压后打开其中的 `index.html` 即可查看。
+`backend-checks` 调用 `scripts/run_backend_tests.py` 执行后端测试，`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试。两个任务都会在同一次 CI 中检出本次 PR 合并基线（`main`）跑一次基线覆盖率，随后运行 `scripts/report_coverage.py --check` 校验固定底线与防回退规则，并在 GitHub Actions 运行页摘要（Summary）中展示分层结果和改动代码覆盖率提醒。完整的网页报告作为附件（Artifacts）`backend-coverage` 和 `frontend-coverage` 挂在同一运行页底部，保留 14 天（即使覆盖率门禁未通过也会上传，便于排查未覆盖代码）。
 
 `qa-checks` 根据 PR 描述中的 `Closes #编号` 或 `Refs #编号` 读取 `tests/acceptance/issues/编号.json`，检查清单里的每个测试是否在本轮前端或后端测试中通过。前端 ID 由仓库相对路径、各层 `describe` 标题和测试标题组成，以 ` > ` 分隔，例如 `frontend/tests/historyUtils.test.ts > historyUtils > compares two reports`。
 
