@@ -1,0 +1,13 @@
+{
+  "required_tests": [
+    "test_coverage_report.CoverageGateTests.test_backend_passes_at_floor_and_exact_regression_tolerance",
+    "test_coverage_report.CoverageGateTests.test_backend_fails_below_floor_and_writes_summary",
+    "test_coverage_report.CoverageGateTests.test_backend_fails_when_drop_exceeds_tolerance_even_above_floor",
+    "test_coverage_report.CoverageGateTests.test_frontend_gates_logic_layer_only_and_ignores_ui_drop",
+    "test_coverage_report.CoverageGateTests.test_frontend_fails_when_logic_layer_drops_below_floor_or_baseline",
+    "test_coverage_report.CoverageGateTests.test_backend_diff_warns_below_80_without_blocking",
+    "test_coverage_report.CoverageGateTests.test_frontend_diff_measures_logic_layer_and_ignores_pages",
+    "test_coverage_report.CoverageGateTests.test_frontend_diff_requires_detail_report",
+    "test_coverage_report.CoverageGateTests.test_diff_base_reads_real_git_diff_and_passes_when_covered"
+  ]
+}
