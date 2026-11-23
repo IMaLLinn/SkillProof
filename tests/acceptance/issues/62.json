@@ -1,0 +1,10 @@
+{
+  "required_tests": [
+    "frontend/tests/integration/apiIntegration.test.ts > API integration > loads catalog and surfaces real 401 errors for unauthenticated requests",
+    "frontend/tests/integration/apiIntegration.test.ts > API integration > completes register, session lookup, CSRF-protected logout, and re-login",
+    "frontend/tests/integration/apiIntegration.test.ts > API integration > runs full assessment lifecycle through report and learning recommendations",
+    "frontend/tests/integration/apiIntegration.test.ts > API integration > lists submitted attempts in history and builds valid retake comparison",
+    "test_qa_checks.QACheckTests.test_invalid_or_missing_integration_results_fail",
+    "test_qa_checks.QACheckTests.test_required_tests_accept_integration_suite_ids"
+  ]
+}

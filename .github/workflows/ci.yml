@@ -174,9 +174,41 @@ jobs:
           echo "API did not become ready within 10 minutes" >&2
           exit 1
 
+  integration:
+    name: integration-checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    outputs:
+      passed-tests: ${{ steps.tests.outputs.passed_tests }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: '3.13.9'
+          cache: pip
+          cache-dependency-path: backend/requirements*.txt
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24.12.0'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install backend dependencies
+        run: python -m pip install -r backend/requirements-test.txt
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Run frontend-backend integration tests
+        id: tests
+        run: python scripts/run_integration_tests.py
+
   qa:
     name: qa-checks
-    needs: [frontend, backend]
+    needs: [frontend, backend, integration]
     if: ${{ always() }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
@@ -202,8 +234,10 @@ jobs:
         env:
           FRONTEND_RESULT: ${{ needs.frontend.result }}
           BACKEND_RESULT: ${{ needs.backend.result }}
+          INTEGRATION_RESULT: ${{ needs.integration.result }}
           PASSED_TESTS: ${{ needs.backend.outputs.passed-tests }}
           FRONTEND_PASSED_TESTS: ${{ needs.frontend.outputs.passed-tests }}
+          INTEGRATION_PASSED_TESTS: ${{ needs.integration.outputs.passed-tests }}
           PR_DETAILS: ${{ runner.temp }}/skillproof-pr.json
           CHANGED_FILES: ${{ runner.temp }}/skillproof-changed-files
         run: |
