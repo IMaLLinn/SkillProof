@@ -1,15 +1,15 @@
 """Real HTTP save ordering against temporary SQLite; gates only delay transport."""
 
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
-from contextlib import closing
 import json
-from pathlib import Path
 import socket
-from tempfile import TemporaryDirectory
 import threading
 import time
 import unittest
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import closing
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import httpx
 import uvicorn

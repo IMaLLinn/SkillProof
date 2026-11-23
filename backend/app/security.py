@@ -1,10 +1,10 @@
 """Opaque sessions, CSRF validation, password hashing and bounded login attempts."""
 
-from dataclasses import dataclass
 import hashlib
 import secrets
 import sqlite3
 import time
+from dataclasses import dataclass
 from urllib.parse import urlsplit
 
 from argon2 import PasswordHasher

@@ -1,22 +1,23 @@
 """Exercise the explicit reset CLI using only disposable development databases."""
-from contextlib import closing
-from dataclasses import replace
 import json
 import os
-from pathlib import Path
-import sqlite3
 import shutil
+import sqlite3
 import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import closing
+from dataclasses import replace
+from pathlib import Path
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
-from app.config import Settings
-from app.db import connect, initialize, now_iso
+from app.config import Settings  # noqa: E402
+from app.db import connect, initialize, now_iso  # noqa: E402
+
 sys.path.insert(0, str(BACKEND.parent / 'scripts'))
-from reset_local_db import backup_database, reset_database
+from reset_local_db import backup_database, reset_database  # noqa: E402
 
 
 class ResetLocalDatabaseTests(unittest.TestCase):

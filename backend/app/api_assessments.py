@@ -1,15 +1,19 @@
 """Owner-scoped assessment creation, draft recovery and atomic submission."""
 
-from collections import defaultdict
 import json
 import random
+from collections import defaultdict
 from typing import Literal
 from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import ValidationError
 
-from .assessment_dependencies import get_assessment_roles, get_report_builder, require_assessment_user
+from .assessment_dependencies import (
+    get_assessment_roles,
+    get_report_builder,
+    require_assessment_user,
+)
 from .catalog import BLUEPRINT, DIMENSION_IDS, DIMENSION_NAMES, MODEL_VERSION
 from .db import dump, now_iso, transaction
 from .models import AnswersInput, AttemptInput, QuestionInput

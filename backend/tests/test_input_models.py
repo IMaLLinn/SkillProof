@@ -2,8 +2,8 @@ import unittest
 
 from pydantic import ValidationError
 
-from app.models import ProfileInput
 from app.catalog import ROLE_MAP
+from app.models import ProfileInput
 
 
 class InputModelTests(unittest.TestCase):

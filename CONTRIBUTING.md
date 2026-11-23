@@ -83,7 +83,7 @@ Closes #12
 无 / 当前仍存在……
 ```
 
-`Closes #编号` 会在合并后自动关闭 Issue。提交前按[测试指南](docs/testing/README.md)完成本地检查，并维护对应 Issue 的必测清单；CI 全部通过后再请求 Review。
+`Closes #编号` 会在合并后自动关闭 Issue。提交前按[测试指南](docs/testing/README.md)完成本地检查（含后端 Ruff 静态规范检查与前端 ESLint），并维护对应 Issue 的必测清单；CI 全部通过后再请求 Review。
 
 前端代码请将计算、表单校验与数据整理逻辑统一放在逻辑层（`frontend/src/lib/*`、`frontend/src/api.ts`、`frontend/src/authValidation.ts`），不要塞进 `.tsx` 页面组件。CI 会强制检查：
 

@@ -22,6 +22,13 @@ $env:PYTHONPATH = 'backend'
 .\backend\.venv\Scripts\python.exe -X utf8 scripts/run_backend_tests.py
 ```
 
+后端与脚本静态规范检查（Ruff）：
+
+```powershell
+.\backend\.venv\Scripts\python.exe -m ruff check backend scripts
+.\backend\.venv\Scripts\python.exe -m ruff check --fix backend scripts
+```
+
 后端用例使用临时数据库或独立夹具，不写入开发数据库。需要单独运行某个测试模块时，例如：
 
 ```powershell
@@ -41,6 +48,7 @@ $env:PYTHONPATH = 'backend'
 | `test_reset_local_db.py` | 本地重置确认、环境限制、备份和失败保护 |
 | `test_qa_checks.py` | CI 运行器及 Issue 必测清单检查逻辑 |
 | `test_coverage_report.py` | 分层覆盖率门禁、防回退与改动代码覆盖率提醒检查逻辑 |
+| `test_lint_checks.py` | Ruff 静态规范配置与检查执行逻辑 |
 
 前端检查：
 
@@ -99,7 +107,7 @@ Set-Location ..
 
 ## CI 与必测清单
 
-`backend-checks` 调用 `scripts/run_backend_tests.py` 执行后端测试，`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试。两个任务都会在同一次 CI 中检出本次 PR 合并基线（`main`）跑一次基线覆盖率，随后运行 `scripts/report_coverage.py --check` 校验固定底线与防回退规则，并在 GitHub Actions 运行页摘要（Summary）中展示分层结果和改动代码覆盖率提醒。完整的网页报告作为附件（Artifacts）`backend-coverage` 和 `frontend-coverage` 挂在同一运行页底部，保留 14 天（即使覆盖率门禁未通过也会上传，便于排查未覆盖代码）。
+`backend-checks` 先执行 `python -m ruff check backend scripts` 做静态规范检查，再调用 `scripts/run_backend_tests.py` 执行后端测试；`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试。两个任务都会在同一次 CI 中检出本次 PR 合并基线（`main`）跑一次基线覆盖率，随后运行 `scripts/report_coverage.py --check` 校验固定底线与防回退规则，并在 GitHub Actions 运行页摘要（Summary）中展示分层结果和改动代码覆盖率提醒。完整的网页报告作为附件（Artifacts）`backend-coverage` 和 `frontend-coverage` 挂在同一运行页底部，保留 14 天（即使覆盖率门禁未通过也会上传，便于排查未覆盖代码）。
 
 `qa-checks` 根据 PR 描述中的 `Closes #编号` 或 `Refs #编号` 读取 `tests/acceptance/issues/编号.json`，检查清单里的每个测试是否在本轮前端或后端测试中通过。前端 ID 由仓库相对路径、各层 `describe` 标题和测试标题组成，以 ` > ` 分隔，例如 `frontend/tests/historyUtils.test.ts > historyUtils > compares two reports`。
 

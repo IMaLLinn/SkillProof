@@ -1,17 +1,17 @@
 """Report reads through real sessions and migrations; attempt rows are test fixtures."""
 
+import unittest
 from contextlib import closing
 from pathlib import Path
 from tempfile import TemporaryDirectory
-import unittest
 
 from fastapi.testclient import TestClient
+from test_scoring import attempt_fixture, score
 
 from app.config import Settings
 from app.db import connect, dump
 from app.main import create_app
 from app.scoring import MODEL_VERSION
-from test_scoring import attempt_fixture, score
 
 PASSWORD = "report-test-only-password-2026"
 

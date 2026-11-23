@@ -2,6 +2,7 @@
 from fastapi import Request
 from fastapi.responses import JSONResponse
 from starlette.datastructures import MutableHeaders
+
 from .config import Settings
 from .security import validate_origin
 from .url_validation import authority_hostname

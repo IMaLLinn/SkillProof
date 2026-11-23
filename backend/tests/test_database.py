@@ -1,25 +1,25 @@
 """T02 persistence contracts; no HTTP, authentication or scoring implementation."""
-import json
 import hashlib
-from collections import Counter
-from contextlib import closing
-from pathlib import Path
+import json
 import sqlite3
 import subprocess
 import sys
 import tempfile
 import unittest
+from collections import Counter
+from contextlib import closing
+from pathlib import Path
 from uuid import uuid4
+
+from pydantic import ValidationError
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
-from pydantic import ValidationError
-
-from app.models import QuestionInput
-from app.catalog import BLUEPRINT, DIMENSION_IDS, ROLE_MAP
-from app.config import Settings
-from app.db import connect, dump, initialize, now_iso, transaction
+from app.catalog import BLUEPRINT, DIMENSION_IDS, ROLE_MAP  # noqa: E402
+from app.config import Settings  # noqa: E402
+from app.db import connect, dump, initialize, now_iso, transaction  # noqa: E402
+from app.models import QuestionInput  # noqa: E402
 
 
 class DatabaseTests(unittest.TestCase):

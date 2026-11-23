@@ -2,15 +2,14 @@
 
 import hashlib
 import json
+import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
-import unittest
 
 from fastapi.testclient import TestClient
 
 from app.config import Settings
 from app.main import create_app
-
 
 DIMENSIONS = (
     ("programming", "程序设计"), ("algorithms", "算法基础"),

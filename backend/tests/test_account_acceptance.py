@@ -1,10 +1,10 @@
 """Account and catalog acceptance through the real API and an isolated database."""
 
+import unittest
 from contextlib import closing
 from dataclasses import replace
 from pathlib import Path
 from tempfile import TemporaryDirectory
-import unittest
 from unittest.mock import patch
 
 from fastapi.testclient import TestClient
@@ -13,7 +13,6 @@ from app.config import Settings
 from app.db import connect
 from app.main import create_app
 from app.security import PASSWORD_HASHER, password_matches
-
 
 PASSWORD = "acceptance-test-password"
 
@@ -101,15 +100,15 @@ class AccountAcceptanceTests(unittest.TestCase):
                 user = self.register(client, f"{change}@example.invalid")["user"]
                 client.cookies.clear()
 
-                def verify_then_change_account(hashed, password):
+                def verify_then_change_account(hashed, password, change=change, user_id=user["id"]):
                     matches = password_matches(hashed, password)
                     self.assertTrue(matches)
                     with closing(connect(self.settings)) as con:
                         if change == "delete":
-                            con.execute("DELETE FROM users WHERE id=?", (user["id"],))
+                            con.execute("DELETE FROM users WHERE id=?", (user_id,))
                         else:
                             new_hash = PASSWORD_HASHER.hash("replacement passphrase")
-                            con.execute("UPDATE users SET password_hash=? WHERE id=?", (new_hash, user["id"]))
+                            con.execute("UPDATE users SET password_hash=? WHERE id=?", (new_hash, user_id))
                     return matches
 
                 with patch("app.api_auth.password_matches", side_effect=verify_then_change_account):
