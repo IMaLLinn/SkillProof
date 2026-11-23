@@ -66,9 +66,19 @@ npm test
 | `HistoryPage.test.tsx` | 历史页面展示与交互 |
 | `LearningRecommendations.test.tsx` | 学习建议展示与失败重试 |
 
+前后端直连集成测试（在仓库根目录执行，自动启停临时 FastAPI 与临时 SQLite，直接调用前端真实 API 层）：
+
+```powershell
+.\backend\.venv\Scripts\python.exe -X utf8 scripts/run_integration_tests.py
+```
+
+| 测试文件 | 持续验证的行为 |
+|---|---|
+| `integration/apiIntegration.test.ts` | 真实接口下的目录、认证与 CSRF、测评全流程、报告与建议、历史对比 |
+
 ## 覆盖率标准与报告
 
-PR 对应的前端、后端、QA 三项 CI 检查必须全部通过。覆盖率按层设置门槛，报告文件已被 Git 忽略，不要提交：
+PR 对应的前端、后端、集成、QA 四项 CI 检查必须全部通过。覆盖率按层设置门槛，报告文件已被 Git 忽略，不要提交：
 
 | 范围 | 统计指标 | 固定底线 | 防回退规则 | 未达标处理 |
 |---|---|---|---|---|
@@ -107,9 +117,9 @@ Set-Location ..
 
 ## CI 与必测清单
 
-`backend-checks` 先执行 `python -m ruff check backend scripts` 做静态规范检查，再调用 `scripts/run_backend_tests.py` 执行后端测试；`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试。两个任务都会在同一次 CI 中检出本次 PR 合并基线（`main`）跑一次基线覆盖率，随后运行 `scripts/report_coverage.py --check` 校验固定底线与防回退规则，并在 GitHub Actions 运行页摘要（Summary）中展示分层结果和改动代码覆盖率提醒。完整的网页报告作为附件（Artifacts）`backend-coverage` 和 `frontend-coverage` 挂在同一运行页底部，保留 14 天（即使覆盖率门禁未通过也会上传，便于排查未覆盖代码）。
+`backend-checks` 先执行 `python -m ruff check backend scripts` 做静态规范检查，再调用 `scripts/run_backend_tests.py` 执行后端测试；`frontend-checks` 在 lint 和构建后调用 `scripts/run_frontend_tests.py` 执行前端测试；`integration-checks` 调用 `scripts/run_integration_tests.py` 并发启动真实后端校验前后端接口联调。前后端任务都会在同一次 CI 中检出本次 PR 合并基线（`main`）跑一次基线覆盖率，随后运行 `scripts/report_coverage.py --check` 校验固定底线与防回退规则，并在 GitHub Actions 运行页摘要（Summary）中展示分层结果和改动代码覆盖率提醒。完整的网页报告作为附件（Artifacts）`backend-coverage` 和 `frontend-coverage` 挂在同一运行页底部，保留 14 天（即使覆盖率门禁未通过也会上传，便于排查未覆盖代码）。
 
-`qa-checks` 根据 PR 描述中的 `Closes #编号` 或 `Refs #编号` 读取 `tests/acceptance/issues/编号.json`，检查清单里的每个测试是否在本轮前端或后端测试中通过。前端 ID 由仓库相对路径、各层 `describe` 标题和测试标题组成，以 ` > ` 分隔，例如 `frontend/tests/historyUtils.test.ts > historyUtils > compares two reports`。
+`qa-checks` 根据 PR 描述中的 `Closes #编号` 或 `Refs #编号` 读取 `tests/acceptance/issues/编号.json`，检查清单里的每个测试是否在本轮前端、后端或集成测试中通过。前端与集成测试 ID 由仓库相对路径、各层 `describe` 标题和测试标题组成，以 ` > ` 分隔，例如 `frontend/tests/historyUtils.test.ts > historyUtils > compares two reports`。
 
 测试文件只允许放在 `backend/tests/test_*.py` 或 `frontend/tests/`（含子目录，文件名为 `*.test.ts` 或 `*.test.tsx`）。PR 变更中，文件名匹配 `test_*.py`、`*_test.py`、`*.test.*` 或 `*.spec.*`，但不符合上述目录和命名要求，CI 会报错。
 

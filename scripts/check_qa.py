@@ -60,11 +60,16 @@ def check_test_locations(paths):
 
 
 def main():
-    if os.environ.get("FRONTEND_RESULT") != "success" or os.environ.get("BACKEND_RESULT") != "success":
-        raise ValueError("Frontend and backend checks must both pass")
+    if (
+        os.environ.get("FRONTEND_RESULT") != "success"
+        or os.environ.get("BACKEND_RESULT") != "success"
+        or os.environ.get("INTEGRATION_RESULT") != "success"
+    ):
+        raise ValueError("Frontend, backend and integration checks must all pass")
 
     backend_passed = passed_test_ids("PASSED_TESTS", "Backend test results")
     frontend_passed = passed_test_ids("FRONTEND_PASSED_TESTS", "Frontend test results")
+    integration_passed = passed_test_ids("INTEGRATION_PASSED_TESTS", "Integration test results")
     changed = Path(os.environ["CHANGED_FILES"]).read_bytes().split(b"\0")
     paths = [os.fsdecode(path) for path in changed if path]
     check_test_locations(paths)
@@ -87,7 +92,7 @@ def main():
         ids = data.get("required_tests") if isinstance(data, dict) else None
         required.update(test_ids(ids, f"{registration}: required_tests"))
 
-    missing = required - (backend_passed | frontend_passed)
+    missing = required - (backend_passed | frontend_passed | integration_passed)
     if missing:
         raise ValueError("Required tests did not pass: " + ", ".join(sorted(missing)))
     for folder, layer, passed in (

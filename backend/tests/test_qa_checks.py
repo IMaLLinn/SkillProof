@@ -13,6 +13,7 @@ SCRIPTS = Path(__file__).resolve().parents[2] / "scripts"
 EXISTING = "test_sample.ExistingTests.test_existing"
 OTHER = "test_sample.ExistingTests.test_other"
 FRONTEND = "frontend/tests/sample.test.ts > Sample > passes"
+INTEGRATION = "frontend/tests/integration/apiIntegration.test.ts > API integration > runs"
 
 spec = importlib.util.spec_from_file_location("run_frontend_tests", SCRIPTS / "run_frontend_tests.py")
 frontend_runner = importlib.util.module_from_spec(spec)
@@ -38,8 +39,10 @@ class QACheckTests(unittest.TestCase):
             "CHANGED_FILES": str(self.changed),
             "FRONTEND_RESULT": "success",
             "BACKEND_RESULT": "success",
+            "INTEGRATION_RESULT": "success",
             "PASSED_TESTS": json.dumps([EXISTING]),
             "FRONTEND_PASSED_TESTS": json.dumps([FRONTEND]),
+            "INTEGRATION_PASSED_TESTS": json.dumps([INTEGRATION]),
             "PYTHONDONTWRITEBYTECODE": "1",
         }
 
@@ -163,6 +166,31 @@ class QACheckTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("2 required tests", result.stdout)
         self.assertNotIn("::warning::", result.stdout + result.stderr)
+
+    def test_required_tests_accept_integration_suite_ids(self):
+        self.register([EXISTING, INTEGRATION])
+        self.changed.write_bytes(b"scripts/run_integration_tests.py\0")
+        result = self.check()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("2 required tests", result.stdout)
+
+    def test_invalid_or_missing_integration_results_fail(self):
+        self.changed.write_bytes(b"docs/scrum/week7.md\0")
+        self.env["INTEGRATION_RESULT"] = "failure"
+        failed = self.check()
+        self.assertEqual(failed.returncode, 1)
+        self.assertIn("integration checks", failed.stderr)
+        self.env["INTEGRATION_RESULT"] = "success"
+
+        for results in (None, "", "[", "{}", "[]", "[null]", '[" "]'):
+            with self.subTest(results=results):
+                if results is None:
+                    self.env.pop("INTEGRATION_PASSED_TESTS", None)
+                else:
+                    self.env["INTEGRATION_PASSED_TESTS"] = results
+                result = self.check()
+                self.assertEqual(result.returncode, 1)
+                self.assertIn("Integration test results", result.stderr)
 
     def test_invalid_or_missing_frontend_results_fail(self):
         self.changed.write_bytes(b"docs/scrum/week7.md\0")
