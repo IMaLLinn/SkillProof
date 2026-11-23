@@ -4,7 +4,6 @@ import unittest
 
 from app.scoring import ScoringError, build_report
 
-
 DIMENSIONS = ("programming", "algorithms", "database", "network", "os", "software")
 SUBMITTED_AT = "2026-11-08T12:00:00Z"
 

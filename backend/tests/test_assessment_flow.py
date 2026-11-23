@@ -1,18 +1,18 @@
 """Exercise the assessment and reporting routes with real sessions and scoring."""
 
-from concurrent.futures import ThreadPoolExecutor
-from collections import Counter
-from contextlib import closing
 import json
+import unittest
+from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import closing
 from pathlib import Path
 from tempfile import TemporaryDirectory
-import unittest
 from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 
-from app.config import Settings
 from app.catalog import DIMENSION_IDS
+from app.config import Settings
 from app.db import connect, dump
 from app.main import create_app
 from app.scoring import build_report

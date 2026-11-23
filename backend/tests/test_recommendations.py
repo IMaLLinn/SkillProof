@@ -1,11 +1,11 @@
 """Exercise report-based learning suggestions through real sessions and submissions."""
 
-from contextlib import closing
 import json
+import unittest
+from contextlib import closing
 from pathlib import Path
 from shutil import copytree
 from tempfile import TemporaryDirectory
-import unittest
 
 from fastapi.testclient import TestClient
 

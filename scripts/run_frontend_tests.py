@@ -5,10 +5,10 @@ Extra arguments, such as --coverage, are passed to Vitest.
 
 import json
 import os
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 
 
 def passed_test_ids(report, root):

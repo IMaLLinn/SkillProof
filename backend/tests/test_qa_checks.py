@@ -3,12 +3,11 @@
 import importlib.util
 import json
 import os
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
-
+from pathlib import Path
 
 SCRIPTS = Path(__file__).resolve().parents[2] / "scripts"
 EXISTING = "test_sample.ExistingTests.test_existing"

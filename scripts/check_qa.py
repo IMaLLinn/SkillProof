@@ -1,12 +1,11 @@
 """Check an Issue's required tests against the results of this CI run."""
 
-from fnmatch import fnmatchcase
 import json
 import os
-from pathlib import Path
 import re
 import sys
-
+from fnmatch import fnmatchcase
+from pathlib import Path
 
 ISSUE_REFERENCE = re.compile(
     r"(?:refs|closes|fixes|resolves)[ \t]+(#[1-9][0-9]*(?:\s*[,，]\s*#[1-9][0-9]*)*)"

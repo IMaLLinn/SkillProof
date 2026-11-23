@@ -1,22 +1,23 @@
 """Explicitly reset a stopped development database, retaining a SQLite backup."""
 import argparse
-from contextlib import closing
-from dataclasses import replace
-from datetime import datetime, timezone
 import json
-from pathlib import Path
 import sqlite3
 import sys
 import tempfile
 import time
+from contextlib import closing
+from dataclasses import replace
+from datetime import datetime, timezone
+from pathlib import Path
 from uuid import uuid4
+
+from dotenv import load_dotenv
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'backend'))
 
-from dotenv import load_dotenv
-from app.config import Settings
-from app.db import initialize
+from app.config import Settings  # noqa: E402
+from app.db import initialize  # noqa: E402
 
 
 def backup_database(source, target, timeout=15):

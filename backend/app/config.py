@@ -1,8 +1,9 @@
 """Explicit, environment-driven single-node deployment settings."""
 
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
-import os
+
 from .url_validation import https_url
 
 APP_DIR = Path(__file__).resolve().parent

@@ -17,14 +17,13 @@ Non-blocking reporting:
 from __future__ import annotations
 
 import argparse
-from dataclasses import dataclass
 import json
 import os
-from pathlib import Path
 import re
 import subprocess
 import sys
-
+from dataclasses import dataclass
+from pathlib import Path
 
 REPORTS = {
     "backend": Path("htmlcov/coverage.json"),
@@ -576,4 +575,4 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (OSError, ValueError, KeyError, json.JSONDecodeError) as error:
-        raise SystemExit(f"Coverage report failed: {error}")
+        raise SystemExit(f"Coverage report failed: {error}") from None

@@ -1,29 +1,29 @@
 """HTTP lifecycle tests with real SQLite sessions and synthetic published questions."""
 
-from concurrent.futures import ThreadPoolExecutor
-from collections import Counter
 import hashlib
 import json
-from pathlib import Path
 import sys
 import tempfile
 import time
 import unittest
+from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
+from pathlib import Path
 from unittest.mock import Mock, patch
 from uuid import UUID
-
-BACKEND = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(BACKEND))
 
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
-from app.assessment_dependencies import get_assessment_roles, get_report_builder
-from app.catalog import BLUEPRINT, DIMENSION_IDS, ROLE_MAP
-from app.config import Settings
-from app.db import connect, dump, initialize, now_iso
-from app.main import create_app
-from app.scoring import ScoringError
+BACKEND = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(BACKEND))
+
+from app.assessment_dependencies import get_assessment_roles, get_report_builder  # noqa: E402
+from app.catalog import BLUEPRINT, DIMENSION_IDS, ROLE_MAP  # noqa: E402
+from app.config import Settings  # noqa: E402
+from app.db import connect, dump, initialize, now_iso  # noqa: E402
+from app.main import create_app  # noqa: E402
+from app.scoring import ScoringError  # noqa: E402
 
 
 def report_fixture(attempt, submitted_at):

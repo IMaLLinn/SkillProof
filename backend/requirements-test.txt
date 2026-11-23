@@ -5,3 +5,5 @@ httpcore==1.0.9
 certifi==2026.10.18
 # Coverage report
 coverage==7.17.4
+# Static lint check
+ruff==0.17.6

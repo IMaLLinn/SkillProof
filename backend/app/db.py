@@ -1,10 +1,10 @@
 """SQLite persistence with versioned migrations and transactional seed imports."""
 
+import json
+import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timezone
-import json
 from pathlib import Path
-import sqlite3
 
 from .config import Settings
 from .question_bank import load_bank, sync_bank

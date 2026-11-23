@@ -1,0 +1,9 @@
+{
+  "required_tests": [
+    "test_lint_checks.LintChecksTests.test_ruff_config_enforces_layered_rules_and_fastapi_depends_allowlist",
+    "test_lint_checks.LintChecksTests.test_ruff_check_passes_on_backend_and_scripts",
+    "test_lint_checks.LintChecksTests.test_ruff_check_rejects_unused_import_and_allows_fastapi_depends",
+    "test_account_acceptance.AccountAcceptanceTests.test_login_rejects_account_changes_after_password_verification",
+    "test_coverage_report.CoverageGateTests.test_diff_base_reads_real_git_diff_and_passes_when_covered"
+  ]
+}

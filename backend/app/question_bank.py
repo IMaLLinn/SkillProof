@@ -1,13 +1,13 @@
 """Validate and synchronize the repository-owned question bank without deleting data."""
-from dataclasses import dataclass
 import hashlib
 import json
-from pathlib import Path
 import re
 import sqlite3
+from dataclasses import dataclass
+from pathlib import Path
 
-from .models import QuestionInput
 from .catalog import project_catalog
+from .models import QuestionInput
 
 
 def canonical(value) -> str:

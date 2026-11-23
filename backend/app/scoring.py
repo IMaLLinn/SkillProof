@@ -2,7 +2,6 @@
 
 from fractions import Fraction
 
-
 DIMENSIONS = (
     ("programming", "程序设计"),
     ("algorithms", "算法基础"),

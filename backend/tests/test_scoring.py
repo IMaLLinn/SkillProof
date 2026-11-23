@@ -1,6 +1,6 @@
+import unittest
 from copy import deepcopy
 from fractions import Fraction
-import unittest
 
 from app.scoring import DIMENSION_IDS, ScoringError, _rounded, build_report
 

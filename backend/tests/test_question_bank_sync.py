@@ -1,22 +1,23 @@
 """Versioned repository bank upgrades on disposable SQLite databases."""
-from concurrent.futures import ThreadPoolExecutor
-from contextlib import closing
 import hashlib
 import json
-from pathlib import Path
 import shutil
 import sqlite3
 import sys
 import tempfile
 import unittest
+from concurrent.futures import ThreadPoolExecutor
+from contextlib import closing
+from pathlib import Path
+
+from fastapi.testclient import TestClient
 
 BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
-from fastapi.testclient import TestClient
-from app.config import Settings
-from app.db import connect, dump, initialize, now_iso
-from app.main import create_app
+from app.config import Settings  # noqa: E402
+from app.db import connect, dump, initialize, now_iso  # noqa: E402
+from app.main import create_app  # noqa: E402
 
 
 class QuestionBankSyncTests(unittest.TestCase):

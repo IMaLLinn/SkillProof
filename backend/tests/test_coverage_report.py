@@ -2,12 +2,11 @@
 
 import json
 import os
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
-
+from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parents[2] / "scripts" / "report_coverage.py"
 
@@ -289,9 +288,10 @@ class CoverageGateTests(unittest.TestCase):
     def test_diff_base_reads_real_git_diff_and_passes_when_covered(self):
         repo = self.root / "gitrepo"
         repo.mkdir()
-        git = lambda *args: subprocess.run(
-            ["git", *args], cwd=repo, check=True, capture_output=True, text=True
-        )
+        def git(*args):
+            return subprocess.run(
+                ["git", *args], cwd=repo, check=True, capture_output=True, text=True
+            )
         git("init", "-q")
         git("config", "user.name", "Tester")
         git("config", "user.email", "tester@example.com")
