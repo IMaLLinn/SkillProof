@@ -398,8 +398,18 @@ class AssessmentTests(unittest.TestCase):
         second = self.create()
         self.complete(second)
         self.submit(second)
-        for damaged in ("{", dump({**report, "dimensions": report["dimensions"][:-1]})):
-            with self.subTest(damaged=damaged):
+        dimensions = report["dimensions"]
+        damaged_reports = {
+            "malformed JSON": "{",
+            "missing dimension": dump({**report, "dimensions": dimensions[:-1]}),
+            "duplicate dimension": dump({**report, "dimensions": [*dimensions, dimensions[0]]}),
+            "overall score out of range": dump({**report, "score": 101}),
+            "dimension score out of range": dump({
+                **report, "dimensions": [{**dimensions[0], "score": -1}, *dimensions[1:]],
+            }),
+        }
+        for case, damaged in damaged_reports.items():
+            with self.subTest(case=case):
                 self.con.execute(
                     "UPDATE attempts SET report_json=?,question_bank_version=NULL WHERE id=?",
                     (damaged, first["id"]),

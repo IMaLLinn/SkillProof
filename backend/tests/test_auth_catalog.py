@@ -104,6 +104,15 @@ class AuthCatalogTests(unittest.TestCase):
         self.assertEqual(self.client.post("/api/auth/login", json={}, headers={"Origin": "http://localhost:5173"}).status_code, 422)
         self.assertEqual(self.client.post("/api/auth/login", content="x" * (self.settings.max_body_bytes + 1)).status_code, 413)
 
+    def test_malformed_origin_and_origin_with_path_or_userinfo_are_rejected(self):
+        for origin in ("http://[::1", "localhost:5173", "http://localhost:5173/", "http://user@localhost:5173"):
+            with self.subTest(origin=origin):
+                response = self.client.post("/api/auth/login", headers={"Origin": origin}, json={
+                    "email": "demo@example.com", "password": PASSWORD,
+                })
+                self.assertEqual(response.status_code, 403, response.text)
+                self.assertEqual(response.json(), {"detail": "跨站请求已被拒绝"})
+
     def test_catalog_matches_t03_and_does_not_expose_questions(self):
         result = self.client.get("/api/catalog")
         self.assertEqual(result.status_code, 200)
