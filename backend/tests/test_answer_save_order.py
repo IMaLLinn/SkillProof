@@ -13,6 +13,7 @@ from tempfile import TemporaryDirectory
 
 import httpx
 import uvicorn
+from assessment_fixtures import write_assessment_bank
 
 from app.config import Settings
 from app.db import connect, initialize
@@ -21,13 +22,16 @@ from app.main import create_app
 
 class AnswerSaveOrderTests(unittest.TestCase):
     def setUp(self):
-        directory = self.enterContext(TemporaryDirectory())
-        self.settings = Settings(database_path=Path(directory) / "ordering.sqlite3",
-                                 environment="development", cookie_secure=False, origin=None,
-                                 allowed_hosts=("127.0.0.1",))
+        directory = Path(self.enterContext(TemporaryDirectory()))
+        content = directory / "content"
+        write_assessment_bank(content)
+        self.settings = Settings(
+            database_path=directory / "ordering.sqlite3", content_dir=content,
+            environment="development", cookie_secure=False, origin=None,
+            allowed_hosts=("127.0.0.1",),
+        )
         initialize(self.settings)
         self.con = self.enterContext(closing(connect(self.settings)))
-        # The repository bank is already published; keep its versioned content intact.
         app = create_app(self.settings)
         self.blocked = threading.Event()
         self.release = threading.Event()
