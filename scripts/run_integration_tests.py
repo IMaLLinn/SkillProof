@@ -85,6 +85,7 @@ def main() -> int:
                     "-m",
                     "uvicorn",
                     "app.main:app",
+                    "--no-access-log",
                     "--app-dir",
                     "backend",
                     "--host",

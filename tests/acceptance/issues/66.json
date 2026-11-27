@@ -1,0 +1,20 @@
+{
+  "required_tests": [
+    "test_wrongbook.WrongbookTests.test_collects_only_wrong_answers_and_does_not_leak_active_solutions",
+    "test_wrongbook.WrongbookTests.test_duplicate_and_concurrent_submission_collect_once",
+    "test_wrongbook.WrongbookTests.test_practice_exact_sets_idempotency_and_no_report_changes",
+    "test_wrongbook.WrongbookTests.test_mastery_relogin_restart_and_move_back",
+    "test_wrongbook.WrongbookTests.test_user_isolation_for_list_detail_practice_mastery",
+    "test_wrongbook.WrongbookTests.test_filters_pagination_and_query_validation",
+    "test_wrongbook.WrongbookTests.test_collection_failure_rolls_back_submission",
+    "test_wrongbook.WrongbookTests.test_question_snapshot_survives_bank_changes_and_later_attempts",
+    "test_wrongbook.WrongbookTests.test_upgrading_existing_database_keeps_old_attempts_and_is_repeatable",
+    "frontend/tests/WrongbookPage.test.tsx > WrongbookPage > shows a genuine empty state without an invented question",
+    "frontend/tests/WrongbookPage.test.tsx > WrongbookPage > hides the solution while practicing, persists a result and keeps mastery manual",
+    "frontend/tests/WrongbookPage.test.tsx > WrongbookPage > moves an item to mastered and back through the API",
+    "frontend/tests/WrongbookPage.test.tsx > WrongbookPage > sends role, dimension and topic filters and clears the old detail",
+    "frontend/tests/WrongbookPage.test.tsx > WrongbookPage > shows a load error and allows a successful retry",
+    "frontend/tests/WrongbookPage.test.tsx > WrongbookPage > keeps the original review and allows retry after a practice save fails",
+    "frontend/tests/integration/apiIntegration.test.ts > API integration > collects wrong answers, practices and restores mastery without changing the report"
+  ]
+}

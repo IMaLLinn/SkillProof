@@ -7,13 +7,15 @@ import JobSelectionPage from './pages/jobs/JobSelectionPage'
 import Assessment from './pages/assessment/Assessment'
 import { ResultPage } from './pages/reports/ResultPage'
 import { HistoryPage } from './pages/reports/HistoryPage'
+import { WrongbookPage } from './pages/reports/WrongbookPage'
 
 const ATTEMPT_PATH = /^\/attempts\/([^/]+)\/?$/
 const REPORT_PATH = /^\/reports\/([^/]+)\/?$/
 const HISTORY_PATH = /^\/history\/?$/
+const WRONGBOOK_PATH = /^\/wrongbook\/?$/
 
 function authenticatedPath(path: string) {
-  return ATTEMPT_PATH.test(path) || REPORT_PATH.test(path) || HISTORY_PATH.test(path) ? path : '/jobs'
+  return ATTEMPT_PATH.test(path) || REPORT_PATH.test(path) || HISTORY_PATH.test(path) || WRONGBOOK_PATH.test(path) ? path : '/jobs'
 }
 
 function decodeReportId(value: string): string | null {
@@ -279,6 +281,10 @@ function App() {
   }
 
   if (user) {
+    if (WRONGBOOK_PATH.test(page)) {
+      return <WrongbookPage key={user.id} onBack={() => navigate('/jobs')}
+        onOpenReport={(id) => navigate(`/reports/${encodeURIComponent(id)}`)} />
+    }
     if (HISTORY_PATH.test(page)) {
       return (
         <HistoryPage
@@ -314,6 +320,7 @@ function App() {
           key={`${user.id}:${attemptId}`}
           attemptId={attemptId}
           onOpenHistory={() => navigate('/history')}
+          onOpenWrongbook={() => navigate('/wrongbook')}
         />
       )
     }
@@ -329,6 +336,7 @@ function App() {
         onStartAssessment={startAssessment}
         isStarting={isStarting}
         onOpenHistory={() => navigate('/history')}
+        onOpenWrongbook={() => navigate('/wrongbook')}
       />
     )
   }

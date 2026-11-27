@@ -33,9 +33,10 @@ interface ResultPageProps {
   attemptId: string
   /** 打开历史测评记录页；未传入时不显示该入口，保持组件可独立使用。 */
   onOpenHistory?: () => void
+  onOpenWrongbook?: () => void
 }
 
-export function ResultPage({ attemptId, onOpenHistory }: ResultPageProps) {
+export function ResultPage({ attemptId, onOpenHistory, onOpenWrongbook }: ResultPageProps) {
   const [state, setState] = useState<PageState>({ status: 'loading' })
   const [reloadToken, setReloadToken] = useState(0)
 
@@ -233,6 +234,9 @@ export function ResultPage({ attemptId, onOpenHistory }: ResultPageProps) {
         <p className="result-table-hint">表格可左右滑动查看完整列</p>
       </section>
 
+      {onOpenWrongbook && <p className="result-footer">
+        <button type="button" className="result-footer__link" onClick={onOpenWrongbook}>查看错题本</button>
+      </p>}
       {onOpenHistory && (
         <p className="result-footer">
           <button type="button" className="result-footer__link" onClick={onOpenHistory}>

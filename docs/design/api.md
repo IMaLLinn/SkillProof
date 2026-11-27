@@ -399,3 +399,14 @@ python -m uvicorn app.main:app --host localhost --port 8000
 ```
 
 如果直接从 localhost:8000 同源访问，将 Origin 配为该地址；端口改变时同步配置。保留 Host、Origin 和 CSRF 校验；生产 HTTPS 必须启用 Secure Cookie。认证响应可能包含安全的额外用户字段，前端仅依赖上述最小字段。
+
+## 错题本与重练（#66）
+
+已实现错题自动收集、个人错题查询、独立重练和手动掌握状态：
+
+- `GET /api/wrong-questions`：岗位、维度、知识点、状态筛选与分页。
+- `GET /api/wrong-questions/{id}`：原测评答案、题目快照、解析和重练记录。
+- `POST /api/wrong-questions/{id}/practice`：提交本轮重练，按请求编号防止重复计次。
+- `PATCH /api/wrong-questions/{id}`：标记已掌握或移回待复习。
+
+只有成功提交的测评才会收集错题；重练不修改原测评答案、分数和报告。全部数据按用户隔离，修改操作沿用现有 CSRF 校验。字段、来源快照与历史数据范围见 [错题本接口说明](wrongbook.md)。

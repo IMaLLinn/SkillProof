@@ -19,6 +19,7 @@ from .db import dump, now_iso, transaction
 from .models import AnswersInput, AttemptInput, QuestionInput
 from .reports import parse_report_snapshot, read_report, report_score_summary
 from .security import get_db
+from .wrongbook import collect_wrong_questions
 
 router = APIRouter(prefix="/api", tags=["assessments"])
 
@@ -215,4 +216,5 @@ def submit_attempt(
             "WHERE id=? AND user_id=?",
             (submitted_at, dump(report), report["modelVersion"], attempt_id, user_id),
         )
+        collect_wrong_questions(con, row, submitted_at)
         return report

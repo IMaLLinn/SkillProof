@@ -15,6 +15,7 @@ from .db import initialize
 from .recommendations import router as recommendations_router
 from .reports import router as reports_router
 from .request_guard import RequestGuard
+from .wrongbook import router as wrongbook_router
 
 LOGGER = logging.getLogger("skillproof")
 
@@ -64,6 +65,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.include_router(assessments_router)
     app.include_router(reports_router)
     app.include_router(recommendations_router)
+    app.include_router(wrongbook_router)
     return app
 
 
