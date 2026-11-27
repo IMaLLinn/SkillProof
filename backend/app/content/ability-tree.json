@@ -38,6 +38,106 @@
         {
           "id": "programming.copy-isolation",
           "name": "嵌套数据的隔离"
+        },
+        {
+          "id": "programming.bitwise-operators",
+          "name": "按位运算"
+        },
+        {
+          "id": "programming.python-dictionary",
+          "name": "Python 字典键值对"
+        },
+        {
+          "id": "programming.python-range",
+          "name": "Python range 与序列构造"
+        },
+        {
+          "id": "programming.javascript-substring",
+          "name": "JavaScript 字符串截取"
+        },
+        {
+          "id": "programming.python-default-arguments",
+          "name": "Python 默认实参"
+        },
+        {
+          "id": "programming.python-functions",
+          "name": "Python 函数与作用域"
+        },
+        {
+          "id": "programming.js-async",
+          "name": "JavaScript 异步与事件循环"
+        },
+        {
+          "id": "programming.js-functions",
+          "name": "JavaScript 函数与模块"
+        },
+        {
+          "id": "programming.js-object",
+          "name": "JavaScript 对象与原型"
+        },
+        {
+          "id": "programming.js-scope",
+          "name": "JavaScript 变量作用域与提升"
+        },
+        {
+          "id": "programming.js-types",
+          "name": "JavaScript 类型与运算符"
+        },
+        {
+          "id": "programming.python-classes",
+          "name": "Python 类与面向对象"
+        },
+        {
+          "id": "programming.control-and-execution",
+          "name": "控制流与程序执行"
+        },
+        {
+          "id": "programming.python-sequences",
+          "name": "Python 序列与集合"
+        },
+        {
+          "id": "programming.js-arrays",
+          "name": "JavaScript 数组与集合"
+        },
+        {
+          "id": "programming.js-string",
+          "name": "JavaScript 字符串方法"
+        },
+        {
+          "id": "programming.object-orientation",
+          "name": "面向对象与封装"
+        },
+        {
+          "id": "programming.regex",
+          "name": "正则表达式"
+        },
+        {
+          "id": "programming.python-runtime",
+          "name": "Python 模块、类型与执行"
+        },
+        {
+          "id": "programming.js-dom",
+          "name": "JavaScript DOM 与事件"
+        },
+        {
+          "id": "programming.python-strings",
+          "name": "Python 字符串与格式化"
+        },
+        {
+          "id": "programming.python-errors",
+          "name": "Python 异常与资源管理"
+        },
+        {
+          "id": "programming.js-api",
+          "name": "JavaScript 标准接口"
+        },
+        {
+          "id": "programming.data-model",
+          "name": "基础数据结构与程序语义"
+        },
+        {
+          "id": "programming.encoding-numbers",
+          "name": "数值表示与字符编码"
         }
       ]
     },
@@ -73,6 +173,62 @@
         {
           "id": "algorithms.directed-cycle",
           "name": "有向图环检测"
+        },
+        {
+          "id": "algorithms.linked-list-insertion",
+          "name": "单链表头插"
+        },
+        {
+          "id": "algorithms.bst-height",
+          "name": "二叉搜索树高度与退化"
+        },
+        {
+          "id": "algorithms.merge-sort-recursion",
+          "name": "归并排序与递归"
+        },
+        {
+          "id": "algorithms.search-complexity",
+          "name": "二分与线性查找的复杂度"
+        },
+        {
+          "id": "algorithms.dynamic-programming",
+          "name": "动态规划与子问题复用"
+        },
+        {
+          "id": "algorithms.stable-sort",
+          "name": "排序稳定性"
+        },
+        {
+          "id": "algorithms.graphs",
+          "name": "图遍历与最短路径"
+        },
+        {
+          "id": "algorithms.sorting",
+          "name": "排序算法与代价"
+        },
+        {
+          "id": "algorithms.hash-tables",
+          "name": "哈希表与冲突"
+        },
+        {
+          "id": "algorithms.algorithmic-strategies",
+          "name": "递归、贪心与回溯"
+        },
+        {
+          "id": "algorithms.tree-structure",
+          "name": "树结构与遍历"
+        },
+        {
+          "id": "algorithms.algorithmic-complexity",
+          "name": "渐近复杂度与增长阶"
+        },
+        {
+          "id": "algorithms.stack-queue",
+          "name": "栈与队列"
+        },
+        {
+          "id": "algorithms.linked-list",
+          "name": "链表节点及操作"
         }
       ]
     },
@@ -108,6 +264,42 @@
         {
           "id": "database.transactional-outbox",
           "name": "事务 Outbox 与重复投递"
+        },
+        {
+          "id": "database.sql-ordering",
+          "name": "SQL 结果排序"
+        },
+        {
+          "id": "database.referential-actions",
+          "name": "外键引用动作"
+        },
+        {
+          "id": "database.sql-view",
+          "name": "SQL 普通视图"
+        },
+        {
+          "id": "database.sql-aggregation",
+          "name": "SQL 分组与聚合"
+        },
+        {
+          "id": "database.sql-joins",
+          "name": "SQL 联接与集合运算"
+        },
+        {
+          "id": "database.schema-design",
+          "name": "数据建模与规范化"
+        },
+        {
+          "id": "database.sql-expressions",
+          "name": "SQL 表达式与函数"
+        },
+        {
+          "id": "database.sql-data-changes",
+          "name": "SQL 数据写入与表结构"
+        },
+        {
+          "id": "database.sql-nulls",
+          "name": "SQL 空值与条件逻辑"
         }
       ]
     },
@@ -143,6 +335,54 @@
         {
           "id": "network.session-request-security",
           "name": "Cookie 会话、CSRF 与对象授权"
+        },
+        {
+          "id": "network.dns",
+          "name": "DNS 地址解析"
+        },
+        {
+          "id": "network.udp",
+          "name": "用户数据报协议（UDP）"
+        },
+        {
+          "id": "network.osi-network-layer",
+          "name": "OSI 网络层"
+        },
+        {
+          "id": "network.http-schemes",
+          "name": "HTTP 与 HTTPS URL 方案"
+        },
+        {
+          "id": "network.udp-header",
+          "name": "UDP 首部与长度"
+        },
+        {
+          "id": "network.osi-model",
+          "name": "OSI 参考模型与分层"
+        },
+        {
+          "id": "network.ip-addressing",
+          "name": "IP 地址与子网"
+        },
+        {
+          "id": "network.network-topology",
+          "name": "局域网与网络拓扑"
+        },
+        {
+          "id": "network.http-status",
+          "name": "HTTP 状态码与语义"
+        },
+        {
+          "id": "network.network-performance",
+          "name": "网络速率与时延"
+        },
+        {
+          "id": "network.network-access",
+          "name": "网络协议与接入"
+        },
+        {
+          "id": "network.network-forwarding",
+          "name": "网络设备与转发"
         }
       ]
     },
@@ -178,6 +418,54 @@
         {
           "id": "os.bounded-buffer",
           "name": "有界缓冲区与信号量"
+        },
+        {
+          "id": "os.file-rename",
+          "name": "文件与目录重命名"
+        },
+        {
+          "id": "os.system-identification",
+          "name": "Linux 系统信息查询"
+        },
+        {
+          "id": "os.file-byte-count",
+          "name": "文件字节计数"
+        },
+        {
+          "id": "os.path-resolution",
+          "name": "目录路径解析"
+        },
+        {
+          "id": "os.file-permissions",
+          "name": "Unix 文件权限位"
+        },
+        {
+          "id": "os.system-setup",
+          "name": "Linux 系统配置与服务"
+        },
+        {
+          "id": "os.posix-text",
+          "name": "Linux 文本处理与管道"
+        },
+        {
+          "id": "os.shells",
+          "name": "Unix Shell 与命令解释"
+        },
+        {
+          "id": "os.file-organization",
+          "name": "Linux 路径与文件操作"
+        },
+        {
+          "id": "os.os-platform",
+          "name": "操作系统与平台基础"
+        },
+        {
+          "id": "os.process-tools",
+          "name": "Linux 进程与作业管理"
+        },
+        {
+          "id": "os.filesystem",
+          "name": "Linux 文件系统与设备"
         }
       ]
     },
@@ -213,6 +501,70 @@
         {
           "id": "software.message-idempotency",
           "name": "至少一次投递与消费幂等"
+        },
+        {
+          "id": "software.git-stash",
+          "name": "Git 暂存修改与恢复"
+        },
+        {
+          "id": "software.git-branching",
+          "name": "Git 分支创建与切换"
+        },
+        {
+          "id": "software.smoke-testing",
+          "name": "冒烟测试"
+        },
+        {
+          "id": "software.nonfunctional-requirements",
+          "name": "非功能性需求"
+        },
+        {
+          "id": "software.rolling-deployment",
+          "name": "滚动部署"
+        },
+        {
+          "id": "software.git-diff-staging",
+          "name": "Git 暂存区差异检查"
+        },
+        {
+          "id": "software.git-history",
+          "name": "Git 提交与版本历史"
+        },
+        {
+          "id": "software.test-design",
+          "name": "软件测试方法与分层"
+        },
+        {
+          "id": "software.git-working-tree",
+          "name": "Git 工作区与配置"
+        },
+        {
+          "id": "software.git-remotes",
+          "name": "Git 远程仓库与协作"
+        },
+        {
+          "id": "software.software-life-cycle",
+          "name": "软件过程与工程实践"
+        },
+        {
+          "id": "software.deployment",
+          "name": "持续交付与部署策略"
+        },
+        {
+          "id": "software.agile-methods",
+          "name": "Scrum、看板与敏捷方法"
+        },
+        {
+          "id": "software.agile-planning",
+          "name": "敏捷需求、估算与跟踪"
+        },
+        {
+          "id": "software.cloud-platforms",
+          "name": "云服务、资源与虚拟化"
+        },
+        {
+          "id": "software.software-architecture",
+          "name": "软件架构与设计"
         }
       ]
     }

@@ -9,6 +9,7 @@ from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
 
+from assessment_fixtures import write_assessment_bank
 from fastapi.testclient import TestClient
 
 from app.catalog import DIMENSION_IDS
@@ -20,9 +21,11 @@ from app.scoring import build_report
 
 class AssessmentFlowTests(unittest.TestCase):
     def test_authenticated_submission_lifecycle(self):
-        directory = self.enterContext(TemporaryDirectory())
+        directory = Path(self.enterContext(TemporaryDirectory()))
+        content = directory / "content"
+        write_assessment_bank(content)
         settings = Settings(
-            database_path=Path(directory) / "assessment.sqlite3",
+            database_path=directory / "assessment.sqlite3", content_dir=content,
             environment="development", cookie_secure=False,
             origin=None, allowed_hosts=("testserver",),
         )

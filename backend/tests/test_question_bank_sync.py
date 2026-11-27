@@ -30,6 +30,8 @@ class QuestionBankSyncTests(unittest.TestCase):
                                  allowed_hosts=('testserver',))
         self.questions = json.loads((self.content / 'questions.json').read_text(encoding='utf-8'))
         self.manifest = json.loads((self.content / 'manifest.json').read_text(encoding='utf-8'))
+        major, minor, patch = self.manifest['bankVersion'].partition('-')[0].split('.')
+        self.next_version = f'{major}.{minor}.{int(patch) + 1}'
 
     def write_bank(self, version=None):
         if version:
@@ -47,19 +49,22 @@ class QuestionBankSyncTests(unittest.TestCase):
 
     def seed_legacy(self):
         """Build the real pre-sync schema, not a database initialized by the new code."""
+        legacy_questions = [q for q in self.questions if q['version'] > 1]
+        self.assertTrue(legacy_questions)
         with closing(sqlite3.connect(self.settings.database_path, isolation_level=None)) as con:
             con.execute('CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL)')
             for version in (1, 2):
                 path = next((BACKEND / 'app/migrations').glob(f'{version:03d}_*.sql'))
                 con.executescript(path.read_text(encoding='utf-8'))
                 con.execute('INSERT INTO schema_migrations VALUES(?,?)', (version, now_iso()))
-            for q in self.questions:
+            for q in legacy_questions:
                 old = dict(q, status='draft', sources=[], version=q['version']-1)
                 con.execute('INSERT INTO questions VALUES(?,?,?,?,?,?)', (old['id'], old['dimension'], old['status'], old['version'], dump(old), now_iso()))
                 con.execute('INSERT INTO question_versions VALUES(?,?,?,?)', (old['id'], old['version'], dump(old), now_iso()))
+        return len(legacy_questions)
 
     def test_legacy_draft_bank_upgrades_and_creates_assessment(self):
-        self.seed_legacy()
+        legacy_count = self.seed_legacy()
         with TestClient(create_app(self.settings)) as client:
             credentials = {'email':'upgrade@example.invalid', 'password':'upgrade-test-password-2026'}
             self.assertEqual(client.post('/api/auth/register', json=dict(credentials, name='upgrade')).status_code, 201)
@@ -68,8 +73,9 @@ class QuestionBankSyncTests(unittest.TestCase):
             self.assertEqual(response.status_code, 200, response.text)
             self.assertEqual(len(response.json()['questions']), 18)
         with closing(connect(self.settings)) as con:
-            self.assertEqual(con.execute("SELECT COUNT(*) FROM questions WHERE status='published'").fetchone()[0], 42)
-            self.assertEqual(con.execute('SELECT COUNT(*) FROM question_versions').fetchone()[0], 84)
+            published = sum(q['status'] == 'published' for q in self.questions)
+            self.assertEqual(con.execute("SELECT COUNT(*) FROM questions WHERE status='published'").fetchone()[0], published)
+            self.assertEqual(con.execute('SELECT COUNT(*) FROM question_versions').fetchone()[0], len(self.questions) + legacy_count)
 
     def test_add_update_archive_and_restart_are_idempotent(self):
         initialize(self.settings)
@@ -77,14 +83,14 @@ class QuestionBankSyncTests(unittest.TestCase):
         self.questions[0].update(stem='Updated question text for version sync', version=original['version']+1)
         self.questions[1].update(status='archived', version=self.questions[1]['version']+1)
         self.questions.append(dict(original, id='sync-new-question', version=1))
-        self.write_bank('0.1.4')
+        self.write_bank(self.next_version)
         initialize(self.settings)
         state = self.rows()
         current = {r[0]:json.loads(r[4]) for r in state['questions']}
         self.assertEqual(current[original['id']], self.questions[0])
         self.assertEqual(current[self.questions[1]['id']]['status'], 'archived')
         self.assertIn('sync-new-question', current)
-        self.assertEqual(len(state['question_versions']), 45)
+        self.assertEqual(len(state['question_versions']), len(self.questions) + 2)
         initialize(self.settings)
         self.assertEqual(self.rows(), state)
 
@@ -102,7 +108,7 @@ class QuestionBankSyncTests(unittest.TestCase):
         before = self.rows()
         self.questions[0].update(stem='A valid higher version updated first', version=self.questions[0]['version']+1)
         self.questions[-1]['stem'] = 'A changed question without version increment'
-        self.write_bank('0.1.4')
+        self.write_bank(self.next_version)
         with self.assertRaisesRegex(ValueError, 'version'):
             initialize(self.settings)
         self.assertEqual(self.rows(), before)
@@ -111,7 +117,7 @@ class QuestionBankSyncTests(unittest.TestCase):
         initialize(self.settings)
         before = self.rows()
         self.questions[0]['version'] -= 1
-        self.write_bank('0.1.4')
+        self.write_bank(self.next_version)
         with self.assertRaisesRegex(ValueError, 'version'):
             initialize(self.settings)
         self.assertEqual(self.rows(), before)
@@ -128,7 +134,7 @@ class QuestionBankSyncTests(unittest.TestCase):
         initialize(self.settings)
         before = self.rows()
         self.questions.pop()
-        self.write_bank('0.1.4')
+        self.write_bank(self.next_version)
         with self.assertRaisesRegex(ValueError, 'archiv'):
             initialize(self.settings)
         self.assertEqual(self.rows(), before)
@@ -162,7 +168,7 @@ class QuestionBankSyncTests(unittest.TestCase):
         tree = json.loads(tree_path.read_text(encoding='utf-8'))
         tree['dimensions'].pop()
         tree_path.write_text(json.dumps(tree), encoding='utf-8')
-        self.write_bank('0.1.4')
+        self.write_bank(self.next_version)
         with self.assertRaises(ValueError):
             initialize(self.settings)
         self.assertEqual(self.rows(), before)
@@ -174,7 +180,7 @@ class QuestionBankSyncTests(unittest.TestCase):
             con.execute('UPDATE questions SET content_json=? WHERE id=?', (dump(edited), edited['id']))
         before = self.rows()
         self.questions[0].update(stem='Repository update of the same edited question', version=edited['version']+1)
-        self.write_bank('0.1.4')
+        self.write_bank(self.next_version)
         with self.assertRaisesRegex(ValueError, 'conflict'):
             initialize(self.settings)
         self.assertEqual(self.rows(), before)
@@ -183,10 +189,10 @@ class QuestionBankSyncTests(unittest.TestCase):
         initialize(self.settings)
         self.questions[0]['version'] += 1
         self.questions[0]['stem'] = 'Concurrent update should be recorded once'
-        self.write_bank('0.1.4')
+        self.write_bank(self.next_version)
         with ThreadPoolExecutor(max_workers=3) as pool:
             list(pool.map(lambda _: initialize(self.settings), range(3)))
-        self.assertEqual(len(self.rows()['question_versions']), 43)
+        self.assertEqual(len(self.rows()['question_versions']), len(self.questions) + 1)
 
     def test_sync_preserves_users_sessions_and_attempt_snapshots(self):
         with TestClient(create_app(self.settings)) as client:
@@ -200,7 +206,7 @@ class QuestionBankSyncTests(unittest.TestCase):
             before = self.rows()
             for q in self.questions:
                 q.update(stem='Repository replacement wording for future assessments', version=q['version']+1)
-            self.write_bank('0.1.4')
+            self.write_bank(self.next_version)
             initialize(self.settings)
             after = self.rows()
             for table in ('users', 'sessions', 'attempts'):
