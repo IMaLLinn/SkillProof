@@ -53,6 +53,20 @@ path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encod
 
 ## 验证
 
+离线校验仓库题库。脚本以 JSON 列出所有发现的问题，失败时返回非零退出码。
+
+```powershell
+.\backend\.venv\Scripts\python.exe -X utf8 scripts/validate_question_bank.py
+```
+
+合并前也可单独检查候选题。传入合并后的能力树和现有题库，以检查知识点引用与跨批重复。
+
+```powershell
+.\backend\.venv\Scripts\python.exe -X utf8 scripts/validate_question_bank.py $candidateFile --ability-tree $proposedTreeFile --existing backend/app/content/questions.json
+```
+
+脚本检查缺字段、非法选项、无效答案、题目版本、知识点归属、重复 ID 和重复题干。题意、答案依据及语义重复按批次复核。
+
 仓库根目录执行：
 
 ```powershell

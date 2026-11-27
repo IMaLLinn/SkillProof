@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.0",
   "bankId": "skillproof-backend-original",
-  "bankVersion": "0.1.3",
+  "bankVersion": "0.1.6",
   "roleId": "backend",
   "questionFile": "questions.json",
   "abilityTreeFile": "ability-tree.json",
-  "questionCount": 42,
+  "questionCount": 548,
   "authoredAt": "2026-10-31",
-  "origin": "ai_original",
-  "contentNote": "AI 原创题目；沿用 0.1.2-draft 的题干、选项、答案、解析与难度。依据独立复核记录补齐知识参考来源后发布，未导入外部题库。",
+  "origin": "mixed",
+  "contentNote": "保留原有 42 道题，导入 500 道 freeCodeCamp 改编单选及 6 道新编多选。 0.1.6 修订其中 234 道改编题的中文题干、选项或解析。",
   "review": {
     "status": "approved",
     "reviewer": "王斯语",
@@ -17,15 +17,2575 @@
     "commit": "364def2fddad8d701a14114e965b06bcfda2b40a",
     "reviewedBankVersion": "0.1.2-draft"
   },
-  "difficultyNote": "30 道 easy、12 道 medium、0 道 hard，每维 5/2/0；满足 alpha-18-easy12-medium6-v1 每维 2 道 easy、1 道 medium 的抽题配额。难度为产品标注，未经学生样本实测校准。",
+  "difficultyNote": "346 道 easy、108 道 medium、94 道 hard。当前 Alpha 按 easy 和 medium 配额出题。难度为项目标注。",
   "files": {
-    "questions.json": "7d226956ea8cb6971140c8dbcca6eabe1b0b1145060c601b9602d0c0318cbb93",
-    "ability-tree.json": "22c4e2e7186d3a4e854c07433cf6e1ed1f92ce20d7a89ae07251067b7085cb9c"
+    "questions.json": "e69c4ea66c686ec07d55739c8a1e8bad9c0f39998123344734a4f6d60e582c03",
+    "ability-tree.json": "c1c2b9e322790be936c9a52aafdd2af8c4bfcadd68853bca211f24b53e4e7c7e"
   },
   "difficultyProfile": {
-    "easy": 5,
-    "medium": 2,
-    "hard": 0
+    "programming": {
+      "easy": 116,
+      "medium": 38,
+      "hard": 35
+    },
+    "algorithms": {
+      "easy": 29,
+      "medium": 11,
+      "hard": 10
+    },
+    "database": {
+      "easy": 45,
+      "medium": 15,
+      "hard": 11
+    },
+    "network": {
+      "easy": 26,
+      "medium": 6,
+      "hard": 4
+    },
+    "os": {
+      "easy": 49,
+      "medium": 16,
+      "hard": 18
+    },
+    "software": {
+      "easy": 81,
+      "medium": 22,
+      "hard": 16
+    }
   },
-  "publishedAt": "2026-11-13"
+  "preparedAt": "2026-11-27",
+  "importBatches": [
+    {
+      "id": "issue-64-freecodecamp",
+      "repository": "https://github.com/freeCodeCamp/Developer_Quiz_Site",
+      "commit": "d71a60ba08113e8f999aeaa8c75c7d16aef1dbc0",
+      "indexBase": 1,
+      "originalType": "single",
+      "originalDifficulty": null,
+      "license": "BSD-3-Clause",
+      "licenseFile": "FREECODECAMP_LICENSE_NOTICE.txt",
+      "adaptation": "中文改编，包含双语盲答筛查、批次去重和能力树映射。",
+      "questions": [
+        {
+          "questionId": "FCC-PYTHON-007",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 7
+        },
+        {
+          "questionId": "FCC-PYTHON-013",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 13
+        },
+        {
+          "questionId": "FCC-PYTHON-004",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 4
+        },
+        {
+          "questionId": "FCC-PYTHON-001",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 1
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-001",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 1
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-009",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 9
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-043",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 43
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-144",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 144
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-140",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 140
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-168",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 168
+        },
+        {
+          "questionId": "FCC-SQL-059",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 59
+        },
+        {
+          "questionId": "FCC-SQL-020",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 20
+        },
+        {
+          "questionId": "FCC-SQL-031",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 31
+        },
+        {
+          "questionId": "FCC-SQL-062",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 62
+        },
+        {
+          "questionId": "FCC-SQL-064",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 64
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-002",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 2
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-019",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 19
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-020",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 20
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-035",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 35
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-031",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 31
+        },
+        {
+          "questionId": "FCC-LINUX-054",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 54
+        },
+        {
+          "questionId": "FCC-LINUX-058",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 58
+        },
+        {
+          "questionId": "FCC-LINUX-064",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 64
+        },
+        {
+          "questionId": "FCC-LINUX-075",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 75
+        },
+        {
+          "questionId": "FCC-LINUX-032",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 32
+        },
+        {
+          "questionId": "FCC-GIT-002",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 2
+        },
+        {
+          "questionId": "FCC-GIT-015",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 15
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-010",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 10
+        },
+        {
+          "questionId": "FCC-AGILE-058",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 58
+        },
+        {
+          "questionId": "FCC-DEVOPS-012",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 12
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-036",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 36
+        },
+        {
+          "questionId": "FCC-PYTHON-010",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 10
+        },
+        {
+          "questionId": "FCC-GIT-016",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 16
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-185",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 185
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-090",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 90
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-009",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 9
+        },
+        {
+          "questionId": "FCC-LINUX-051",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 51
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-008",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 8
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-006",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 6
+        },
+        {
+          "questionId": "FCC-LINUX-037",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 37
+        },
+        {
+          "questionId": "FCC-SQL-101",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 101
+        },
+        {
+          "questionId": "FCC-GIT-012",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 12
+        },
+        {
+          "questionId": "FCC-SQL-057",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 57
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-162",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 162
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-038",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 38
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-012",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 12
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-032",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 32
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-030",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 30
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-034",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 34
+        },
+        {
+          "questionId": "FCC-LINUX-082",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 82
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-025",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 25
+        },
+        {
+          "questionId": "FCC-PYTHON-161",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 161
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-034",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 34
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-024",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 24
+        },
+        {
+          "questionId": "FCC-SQL-088",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 88
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-020",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 20
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-008",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 8
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-035",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 35
+        },
+        {
+          "questionId": "FCC-GIT-061",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 61
+        },
+        {
+          "questionId": "FCC-GIT-014",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 14
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-011",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 11
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-007",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 7
+        },
+        {
+          "questionId": "FCC-AGILE-011",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 11
+        },
+        {
+          "questionId": "FCC-LINUX-034",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 34
+        },
+        {
+          "questionId": "FCC-PYTHON-148",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 148
+        },
+        {
+          "questionId": "FCC-PYTHON-112",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 112
+        },
+        {
+          "questionId": "FCC-PYTHON-109",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 109
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-196",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 196
+        },
+        {
+          "questionId": "FCC-SQL-121",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 121
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-192",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 192
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-012",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 12
+        },
+        {
+          "questionId": "FCC-SQL-022",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 22
+        },
+        {
+          "questionId": "FCC-LINUX-161",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 161
+        },
+        {
+          "questionId": "FCC-GIT-049",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 49
+        },
+        {
+          "questionId": "FCC-GIT-009",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 9
+        },
+        {
+          "questionId": "FCC-LINUX-107",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 107
+        },
+        {
+          "questionId": "FCC-LINUX-026",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 26
+        },
+        {
+          "questionId": "FCC-PYTHON-066",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 66
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-181",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 181
+        },
+        {
+          "questionId": "FCC-LINUX-024",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 24
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-172",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 172
+        },
+        {
+          "questionId": "FCC-SQL-114",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 114
+        },
+        {
+          "questionId": "FCC-GIT-043",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 43
+        },
+        {
+          "questionId": "FCC-SQL-113",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 113
+        },
+        {
+          "questionId": "FCC-LINUX-155",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 155
+        },
+        {
+          "questionId": "FCC-PYTHON-159",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 159
+        },
+        {
+          "questionId": "FCC-PYTHON-061",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 61
+        },
+        {
+          "questionId": "FCC-GIT-022",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 22
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-168",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 168
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-065",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 65
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-057",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 57
+        },
+        {
+          "questionId": "FCC-SQL-098",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 98
+        },
+        {
+          "questionId": "FCC-LINUX-011",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 11
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-153",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 153
+        },
+        {
+          "questionId": "FCC-PYTHON-147",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 147
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-136",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 136
+        },
+        {
+          "questionId": "FCC-SQL-035",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 35
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-063",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 63
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-050",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 50
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-143",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 143
+        },
+        {
+          "questionId": "FCC-PYTHON-103",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 103
+        },
+        {
+          "questionId": "FCC-LINUX-096",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 96
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-107",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 107
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-033",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 33
+        },
+        {
+          "questionId": "FCC-SQL-126",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 126
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-038",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 38
+        },
+        {
+          "questionId": "FCC-PYTHON-058",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 58
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-008",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 8
+        },
+        {
+          "questionId": "FCC-LINUX-120",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 120
+        },
+        {
+          "questionId": "FCC-PYTHON-141",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 141
+        },
+        {
+          "questionId": "FCC-SQL-050",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 50
+        },
+        {
+          "questionId": "FCC-LINUX-135",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 135
+        },
+        {
+          "questionId": "FCC-PYTHON-124",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 124
+        },
+        {
+          "questionId": "FCC-LINUX-073",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 73
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-031",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 31
+        },
+        {
+          "questionId": "FCC-LINUX-130",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 130
+        },
+        {
+          "questionId": "FCC-LINUX-046",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 46
+        },
+        {
+          "questionId": "FCC-LINUX-021",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 21
+        },
+        {
+          "questionId": "FCC-REGEX-018",
+          "sourceFile": "src/data/regex-quiz.ts",
+          "sourceIndex": 18
+        },
+        {
+          "questionId": "FCC-PYTHON-027",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 27
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-002",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 2
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-088",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 88
+        },
+        {
+          "questionId": "FCC-PYTHON-023",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 23
+        },
+        {
+          "questionId": "FCC-GIT-051",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 51
+        },
+        {
+          "questionId": "FCC-AGILE-057",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 57
+        },
+        {
+          "questionId": "FCC-GIT-011",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 11
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-037",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 37
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-005",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 5
+        },
+        {
+          "questionId": "FCC-PYTHON-104",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 104
+        },
+        {
+          "questionId": "FCC-LINUX-152",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 152
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-187",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 187
+        },
+        {
+          "questionId": "FCC-SQL-029",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 29
+        },
+        {
+          "questionId": "FCC-GIT-059",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 59
+        },
+        {
+          "questionId": "FCC-REGEX-007",
+          "sourceFile": "src/data/regex-quiz.ts",
+          "sourceIndex": 7
+        },
+        {
+          "questionId": "FCC-LINUX-035",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 35
+        },
+        {
+          "questionId": "FCC-PYTHON-073",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 73
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-124",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 124
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-103",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 103
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-172",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 172
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-042",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 42
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-080",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 80
+        },
+        {
+          "questionId": "FCC-GIT-029",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 29
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-049",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 49
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-122",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 122
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-057",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 57
+        },
+        {
+          "questionId": "FCC-SQL-085",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 85
+        },
+        {
+          "questionId": "FCC-SQL-046",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 46
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-021",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 21
+        },
+        {
+          "questionId": "FCC-PYTHON-081",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 81
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-028",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 28
+        },
+        {
+          "questionId": "FCC-PYTHON-041",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 41
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-173",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 173
+        },
+        {
+          "questionId": "FCC-LINUX-109",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 109
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-149",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 149
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-056",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 56
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-096",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 96
+        },
+        {
+          "questionId": "FCC-SQL-103",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 103
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-013",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 13
+        },
+        {
+          "questionId": "FCC-AGILE-031",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 31
+        },
+        {
+          "questionId": "FCC-LINUX-004",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 4
+        },
+        {
+          "questionId": "FCC-PYTHON-077",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 77
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-143",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 143
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-006",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 6
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-139",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 139
+        },
+        {
+          "questionId": "FCC-SQL-099",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 99
+        },
+        {
+          "questionId": "FCC-DEVOPS-015",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 15
+        },
+        {
+          "questionId": "FCC-AGILE-030",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 30
+        },
+        {
+          "questionId": "FCC-SQL-089",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 89
+        },
+        {
+          "questionId": "FCC-LINUX-007",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 7
+        },
+        {
+          "questionId": "FCC-SQL-040",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 40
+        },
+        {
+          "questionId": "FCC-PYTHON-045",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 45
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-114",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 114
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-062",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 62
+        },
+        {
+          "questionId": "FCC-SQL-094",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 94
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-058",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 58
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-118",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 118
+        },
+        {
+          "questionId": "FCC-SQL-025",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 25
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-077",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 77
+        },
+        {
+          "questionId": "FCC-REGEX-006",
+          "sourceFile": "src/data/regex-quiz.ts",
+          "sourceIndex": 6
+        },
+        {
+          "questionId": "FCC-PYTHON-123",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 123
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-177",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 177
+        },
+        {
+          "questionId": "FCC-LINUX-157",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 157
+        },
+        {
+          "questionId": "FCC-PYTHON-083",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 83
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-038",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 38
+        },
+        {
+          "questionId": "FCC-PYTHON-033",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 33
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-127",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 127
+        },
+        {
+          "questionId": "FCC-LINUX-072",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 72
+        },
+        {
+          "questionId": "FCC-SQL-100",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 100
+        },
+        {
+          "questionId": "FCC-PYTHON-067",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 67
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-004",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 4
+        },
+        {
+          "questionId": "FCC-REGEX-009",
+          "sourceFile": "src/data/regex-quiz.ts",
+          "sourceIndex": 9
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-024",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 24
+        },
+        {
+          "questionId": "FCC-LINUX-019",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 19
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-003",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 3
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-039",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 39
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-147",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 147
+        },
+        {
+          "questionId": "FCC-LINUX-017",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 17
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-050",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 50
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-025",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 25
+        },
+        {
+          "questionId": "FCC-LINUX-014",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 14
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-066",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 66
+        },
+        {
+          "questionId": "FCC-REGEX-017",
+          "sourceFile": "src/data/regex-quiz.ts",
+          "sourceIndex": 17
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-110",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 110
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-006",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 6
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-005",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 5
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-167",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 167
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-044",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 44
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-055",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 55
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-052",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 52
+        },
+        {
+          "questionId": "FCC-DEVOPS-005",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 5
+        },
+        {
+          "questionId": "FCC-AGILE-055",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 55
+        },
+        {
+          "questionId": "FCC-GIT-058",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 58
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-041",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 41
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-003",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 3
+        },
+        {
+          "questionId": "FCC-AGILE-054",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 54
+        },
+        {
+          "questionId": "FCC-SQL-105",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 105
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-056",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 56
+        },
+        {
+          "questionId": "FCC-SQL-071",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 71
+        },
+        {
+          "questionId": "FCC-GIT-057",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 57
+        },
+        {
+          "questionId": "FCC-GIT-023",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 23
+        },
+        {
+          "questionId": "FCC-DEVOPS-002",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 2
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-109",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 109
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-015",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 15
+        },
+        {
+          "questionId": "FCC-PYTHON-079",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 79
+        },
+        {
+          "questionId": "FCC-AGILE-049",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 49
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-186",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 186
+        },
+        {
+          "questionId": "FCC-SQL-123",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 123
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-085",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 85
+        },
+        {
+          "questionId": "FCC-AGILE-037",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 37
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-171",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 171
+        },
+        {
+          "questionId": "FCC-LINUX-092",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 92
+        },
+        {
+          "questionId": "FCC-SQL-024",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 24
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-021",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 21
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-170",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 170
+        },
+        {
+          "questionId": "FCC-PYTHON-070",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 70
+        },
+        {
+          "questionId": "FCC-GIT-055",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 55
+        },
+        {
+          "questionId": "FCC-PYTHON-026",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 26
+        },
+        {
+          "questionId": "FCC-GIT-021",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 21
+        },
+        {
+          "questionId": "FCC-PYTHON-003",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 3
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-164",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 164
+        },
+        {
+          "questionId": "FCC-GIT-018",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 18
+        },
+        {
+          "questionId": "FCC-LINUX-153",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 153
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-159",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 159
+        },
+        {
+          "questionId": "FCC-SQL-106",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 106
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-014",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 14
+        },
+        {
+          "questionId": "FCC-AGILE-039",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 39
+        },
+        {
+          "questionId": "FCC-SQL-005",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 5
+        },
+        {
+          "questionId": "FCC-AGILE-035",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 35
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-054",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 54
+        },
+        {
+          "questionId": "FCC-PYTHON-051",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 51
+        },
+        {
+          "questionId": "FCC-LINUX-133",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 133
+        },
+        {
+          "questionId": "FCC-PYTHON-035",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 35
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-169",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 169
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-157",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 157
+        },
+        {
+          "questionId": "FCC-LINUX-053",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 53
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-152",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 152
+        },
+        {
+          "questionId": "FCC-GIT-060",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 60
+        },
+        {
+          "questionId": "FCC-SQL-095",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 95
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-115",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 115
+        },
+        {
+          "questionId": "FCC-GIT-041",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 41
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-023",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 23
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-163",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 163
+        },
+        {
+          "questionId": "FCC-DEVOPS-006",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 6
+        },
+        {
+          "questionId": "FCC-SQL-016",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 16
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-002",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 2
+        },
+        {
+          "questionId": "FCC-AGILE-028",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 28
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-161",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 161
+        },
+        {
+          "questionId": "FCC-LINUX-129",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 129
+        },
+        {
+          "questionId": "FCC-AGILE-013",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 13
+        },
+        {
+          "questionId": "FCC-PYTHON-150",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 150
+        },
+        {
+          "questionId": "FCC-LINUX-047",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 47
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-113",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 113
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-053",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 53
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-102",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 102
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-097",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 97
+        },
+        {
+          "questionId": "FCC-SQL-118",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 118
+        },
+        {
+          "questionId": "FCC-LINUX-132",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 132
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-183",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 183
+        },
+        {
+          "questionId": "FCC-GIT-034",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 34
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-037",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 37
+        },
+        {
+          "questionId": "FCC-GIT-031",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 31
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-001",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 1
+        },
+        {
+          "questionId": "FCC-AGILE-014",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 14
+        },
+        {
+          "questionId": "FCC-LINUX-101",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 101
+        },
+        {
+          "questionId": "FCC-AGILE-006",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 6
+        },
+        {
+          "questionId": "FCC-PYTHON-160",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 160
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-157",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 157
+        },
+        {
+          "questionId": "FCC-SQL-091",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 91
+        },
+        {
+          "questionId": "FCC-PYTHON-143",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 143
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-165",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 165
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-095",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 95
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-152",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 152
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-084",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 84
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-071",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 71
+        },
+        {
+          "questionId": "FCC-GIT-030",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 30
+        },
+        {
+          "questionId": "FCC-LINUX-074",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 74
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-182",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 182
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-132",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 132
+        },
+        {
+          "questionId": "FCC-GIT-003",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 3
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-179",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 179
+        },
+        {
+          "questionId": "FCC-SQL-124",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 124
+        },
+        {
+          "questionId": "FCC-AGILE-001",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 1
+        },
+        {
+          "questionId": "FCC-SQL-086",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 86
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-007",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 7
+        },
+        {
+          "questionId": "FCC-REGEX-015",
+          "sourceFile": "src/data/regex-quiz.ts",
+          "sourceIndex": 15
+        },
+        {
+          "questionId": "FCC-LINUX-006",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 6
+        },
+        {
+          "questionId": "FCC-PYTHON-128",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 128
+        },
+        {
+          "questionId": "FCC-PYTHON-108",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 108
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-191",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 191
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-156",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 156
+        },
+        {
+          "questionId": "FCC-GIT-026",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 26
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-112",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 112
+        },
+        {
+          "questionId": "FCC-DEVOPS-018",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 18
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-094",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 94
+        },
+        {
+          "questionId": "FCC-SQL-084",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 84
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-077",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 77
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-148",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 148
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-043",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 43
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-014",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 14
+        },
+        {
+          "questionId": "FCC-SQL-045",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 45
+        },
+        {
+          "questionId": "FCC-LINUX-141",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 141
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-127",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 127
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-016",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 16
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-028",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 28
+        },
+        {
+          "questionId": "FCC-LINUX-111",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 111
+        },
+        {
+          "questionId": "FCC-DEVOPS-004",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 4
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-145",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 145
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-051",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 51
+        },
+        {
+          "questionId": "FCC-SQL-066",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 66
+        },
+        {
+          "questionId": "FCC-PYTHON-120",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 120
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-169",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 169
+        },
+        {
+          "questionId": "FCC-DEVOPS-003",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 3
+        },
+        {
+          "questionId": "FCC-LINUX-099",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 99
+        },
+        {
+          "questionId": "FCC-SQL-019",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 19
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-129",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 129
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-111",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 111
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-087",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 87
+        },
+        {
+          "questionId": "FCC-AGILE-038",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 38
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-078",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 78
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-042",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 42
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-022",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 22
+        },
+        {
+          "questionId": "FCC-LINUX-076",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 76
+        },
+        {
+          "questionId": "FCC-SQL-065",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 65
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-107",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 107
+        },
+        {
+          "questionId": "FCC-SQL-006",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 6
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-084",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 84
+        },
+        {
+          "questionId": "FCC-PYTHON-116",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 116
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-041",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 41
+        },
+        {
+          "questionId": "FCC-LINUX-128",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 128
+        },
+        {
+          "questionId": "FCC-SQL-058",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 58
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-128",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 128
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-093",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 93
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-022",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 22
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-061",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 61
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-041",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 41
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-020",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 20
+        },
+        {
+          "questionId": "FCC-DEVOPS-010",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 10
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-005",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 5
+        },
+        {
+          "questionId": "FCC-DEVOPS-007",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 7
+        },
+        {
+          "questionId": "FCC-SQL-063",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 63
+        },
+        {
+          "questionId": "FCC-LINUX-105",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 105
+        },
+        {
+          "questionId": "FCC-PYTHON-056",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 56
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-032",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 32
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-040",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 40
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-036",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 36
+        },
+        {
+          "questionId": "FCC-SQL-054",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 54
+        },
+        {
+          "questionId": "FCC-SQL-049",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 49
+        },
+        {
+          "questionId": "FCC-PYTHON-096",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 96
+        },
+        {
+          "questionId": "FCC-AGILE-023",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 23
+        },
+        {
+          "questionId": "FCC-LINUX-102",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 102
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-125",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 125
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-117",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 117
+        },
+        {
+          "questionId": "FCC-LINUX-041",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 41
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-029",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 29
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-054",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 54
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-142",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 142
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-002",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 2
+        },
+        {
+          "questionId": "FCC-SQL-060",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 60
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-035",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 35
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-040",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 40
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-029",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 29
+        },
+        {
+          "questionId": "FCC-PYTHON-098",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 98
+        },
+        {
+          "questionId": "FCC-PYTHON-093",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 93
+        },
+        {
+          "questionId": "FCC-SQL-047",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 47
+        },
+        {
+          "questionId": "FCC-LINUX-140",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 140
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-065",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 65
+        },
+        {
+          "questionId": "FCC-PYTHON-055",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 55
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-087",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 87
+        },
+        {
+          "questionId": "FCC-LINUX-094",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 94
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-026",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 26
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-086",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 86
+        },
+        {
+          "questionId": "FCC-SQL-004",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 4
+        },
+        {
+          "questionId": "FCC-PYTHON-087",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 87
+        },
+        {
+          "questionId": "FCC-GIT-037",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 37
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-104",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 104
+        },
+        {
+          "questionId": "FCC-DEVOPS-009",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 9
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-069",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 69
+        },
+        {
+          "questionId": "FCC-LINUX-139",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 139
+        },
+        {
+          "questionId": "FCC-AGILE-026",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 26
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-021",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 21
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-003",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 3
+        },
+        {
+          "questionId": "FCC-LINUX-061",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 61
+        },
+        {
+          "questionId": "FCC-PYTHON-086",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 86
+        },
+        {
+          "questionId": "FCC-GIT-013",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 13
+        },
+        {
+          "questionId": "FCC-PYTHON-016",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 16
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-136",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 136
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-018",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 18
+        },
+        {
+          "questionId": "FCC-LINUX-137",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 137
+        },
+        {
+          "questionId": "FCC-GIT-020",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 20
+        },
+        {
+          "questionId": "FCC-PYTHON-158",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 158
+        },
+        {
+          "questionId": "FCC-AGILE-017",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 17
+        },
+        {
+          "questionId": "FCC-LINUX-030",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 30
+        },
+        {
+          "questionId": "FCC-PYTHON-076",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 76
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-091",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 91
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-052",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 52
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-023",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 23
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-014",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 14
+        },
+        {
+          "questionId": "FCC-PYTHON-032",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 32
+        },
+        {
+          "questionId": "FCC-LINUX-131",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 131
+        },
+        {
+          "questionId": "FCC-GIT-006",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 6
+        },
+        {
+          "questionId": "FCC-AGILE-004",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 4
+        },
+        {
+          "questionId": "FCC-PYTHON-152",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 152
+        },
+        {
+          "questionId": "FCC-SQL-075",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 75
+        },
+        {
+          "questionId": "FCC-PYTHON-057",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 57
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-026",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 26
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-073",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 73
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-131",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 131
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-011",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 11
+        },
+        {
+          "questionId": "FCC-LINUX-121",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 121
+        },
+        {
+          "questionId": "FCC-GIT-005",
+          "sourceFile": "src/data/git-quiz.ts",
+          "sourceIndex": 5
+        },
+        {
+          "questionId": "FCC-AGILE-003",
+          "sourceFile": "src/data/agile-quiz.ts",
+          "sourceIndex": 3
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-046",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 46
+        },
+        {
+          "questionId": "FCC-PYTHON-144",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 144
+        },
+        {
+          "questionId": "FCC-PYTHON-052",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 52
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-051",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 51
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-015",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 15
+        },
+        {
+          "questionId": "FCC-LINUX-116",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 116
+        },
+        {
+          "questionId": "FCC-DEVOPS-008",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 8
+        },
+        {
+          "questionId": "FCC-PYTHON-088",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 88
+        },
+        {
+          "questionId": "FCC-SQL-061",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 61
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-103",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 103
+        },
+        {
+          "questionId": "FCC-PYTHON-142",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 142
+        },
+        {
+          "questionId": "FCC-LINUX-097",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 97
+        },
+        {
+          "questionId": "FCC-PYTHON-047",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 47
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-133",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 133
+        },
+        {
+          "questionId": "FCC-LINUX-114",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 114
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-015",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 15
+        },
+        {
+          "questionId": "FCC-PYTHON-074",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 74
+        },
+        {
+          "questionId": "FCC-SQL-111",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 111
+        },
+        {
+          "questionId": "FCC-LINUX-091",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 91
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-088",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 88
+        },
+        {
+          "questionId": "FCC-SQL-079",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 79
+        },
+        {
+          "questionId": "FCC-LINUX-090",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 90
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-067",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 67
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-071",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 71
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-130",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 130
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-018",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 18
+        },
+        {
+          "questionId": "FCC-LINUX-089",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 89
+        },
+        {
+          "questionId": "FCC-SQL-056",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 56
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-069",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 69
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-014",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 14
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-083",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 83
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-184",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 184
+        },
+        {
+          "questionId": "FCC-SQL-053",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 53
+        },
+        {
+          "questionId": "FCC-LINUX-069",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 69
+        },
+        {
+          "questionId": "FCC-PYTHON-113",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 113
+        },
+        {
+          "questionId": "FCC-REGEX-005",
+          "sourceFile": "src/data/regex-quiz.ts",
+          "sourceIndex": 5
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-093",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 93
+        },
+        {
+          "questionId": "FCC-SQL-052",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 52
+        },
+        {
+          "questionId": "FCC-LINUX-063",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 63
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-056",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 56
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-100",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 100
+        },
+        {
+          "questionId": "FCC-LINUX-056",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 56
+        },
+        {
+          "questionId": "FCC-SQL-051",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 51
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-102",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 102
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-031",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 31
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-029",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 29
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-012",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 12
+        },
+        {
+          "questionId": "FCC-REGEX-002",
+          "sourceFile": "src/data/regex-quiz.ts",
+          "sourceIndex": 2
+        },
+        {
+          "questionId": "FCC-CLOUD_COMPUTING-030",
+          "sourceFile": "src/data/cloud-computing-quiz.ts",
+          "sourceIndex": 30
+        },
+        {
+          "questionId": "FCC-LINUX-055",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 55
+        },
+        {
+          "questionId": "FCC-SQL-037",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 37
+        },
+        {
+          "questionId": "FCC-PYTHON-071",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 71
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-099",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 99
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-061",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 61
+        },
+        {
+          "questionId": "FCC-LINUX-052",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 52
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-068",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 68
+        },
+        {
+          "questionId": "FCC-INFORMATION_TECHNOLOGY-032",
+          "sourceFile": "src/data/information-technology-quiz.ts",
+          "sourceIndex": 32
+        },
+        {
+          "questionId": "FCC-SQL-033",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 33
+        },
+        {
+          "questionId": "FCC-PYTHON-122",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 122
+        },
+        {
+          "questionId": "FCC-PYTHON-048",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 48
+        },
+        {
+          "questionId": "FCC-GENERAL_CS-060",
+          "sourceFile": "src/data/general-cs-quiz.ts",
+          "sourceIndex": 60
+        },
+        {
+          "questionId": "FCC-LINUX-049",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 49
+        },
+        {
+          "questionId": "FCC-JAVASCRIPT-082",
+          "sourceFile": "src/data/javascript-quiz.ts",
+          "sourceIndex": 82
+        },
+        {
+          "questionId": "FCC-SQL-028",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 28
+        },
+        {
+          "questionId": "FCC-PYTHON-115",
+          "sourceFile": "src/data/python-quiz.ts",
+          "sourceIndex": 115
+        },
+        {
+          "questionId": "FCC-LINUX-045",
+          "sourceFile": "src/data/linux-quiz.ts",
+          "sourceIndex": 45
+        },
+        {
+          "questionId": "FCC-QUALITY_ASSURANCE-007",
+          "sourceFile": "src/data/quality-assurance-quiz.ts",
+          "sourceIndex": 7
+        },
+        {
+          "questionId": "FCC-SQL-026",
+          "sourceFile": "src/data/sql-quiz.ts",
+          "sourceIndex": 26
+        },
+        {
+          "questionId": "FCC-DEVOPS-017",
+          "sourceFile": "src/data/devops-quiz.ts",
+          "sourceIndex": 17
+        }
+      ]
+    },
+    {
+      "id": "issue-64-authored-multiple",
+      "origin": "ai_original",
+      "questionIds": [
+        "SP64-PRG-001",
+        "SP64-ALG-001",
+        "SP64-DB-001",
+        "SP64-NET-001",
+        "SP64-OS-001",
+        "SP64-SWE-001"
+      ]
+    }
+  ],
+  "importReview": {
+    "status": "team_review_completed",
+    "scope": "issue-64-freecodecamp, issue-64-authored-multiple",
+    "checkedBy": "fxy",
+    "checkedAt": "2026-11-27"
+  }
 }
