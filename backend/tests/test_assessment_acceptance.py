@@ -24,14 +24,10 @@ class AssessmentAcceptanceTests(unittest.TestCase):
         directory = Path(self.enterContext(TemporaryDirectory()))
         content = directory / "content"
         content.mkdir()
-        tree = {
-            "role": {"id": "backend", "name": "后端开发", "description": "流程验收测试岗位"},
-            "dimensions": [
-                {"id": key, "name": name, "description": name,
-                 "topics": [{"id": f"{key}.acceptance", "name": "流程验收样例"}]}
-                for key, name in DIMENSIONS
-            ],
-        }
+        tree = json.loads((Settings().content_dir / "ability-tree.json").read_text(encoding="utf-8"))
+        tree["role"]["description"] = "流程验收测试岗位"
+        for dimension in tree["dimensions"]:
+            dimension["topics"].append({"id": f"{dimension['id']}.acceptance", "name": "流程验收样例"})
         questions = []
         for dimension, _ in DIMENSIONS:
             for suffix, difficulty, kind, correct in (
@@ -46,7 +42,7 @@ class AssessmentAcceptanceTests(unittest.TestCase):
                     "stem": f"固定流程测试题：{dimension}-{suffix}",
                     "options": [{"id": option, "text": f"选项 {option}"} for option in "ABCD"],
                     "correct": correct, "explanation": "固定答案仅用于自动化流程测试。",
-                    "sources": [{"title": "Test fixture", "url": "https://example.com/test-fixture"}],
+                    "sources": [{"title": "流程验收样例", "url": "https://example.com/test-fixture"}],
                     "version": 1, "status": "published",
                 })
         fixtures = {"ability-tree.json": tree, "questions.json": questions}
