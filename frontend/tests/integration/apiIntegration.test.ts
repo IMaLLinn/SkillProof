@@ -16,6 +16,7 @@ import { fetchHistory } from '../../src/lib/historyApi'
 import { buildComparison } from '../../src/lib/historyUtils'
 import { fetchRecommendations, fetchReport } from '../../src/lib/reportApi'
 import type { Answers } from '../../src/pages/assessment/types'
+import { fetchWrongQuestions, fetchWrongDetail, saveMastery, submitPractice } from '../../src/lib/wrongbookApi'
 
 const nativeFetch = globalThis.fetch.bind(globalThis)
 const apiBase = import.meta.env.VITE_API_BASE
@@ -126,6 +127,46 @@ afterEach(() => {
 })
 
 describe('API integration', () => {
+  it('collects wrong answers, practices and restores mastery without changing the report', async () => {
+    installLiveBrowserFetch(requireApiBase())
+    const email = `wrongbook-${crypto.randomUUID().slice(0, 8)}@example.invalid`
+    const password = 'IntegrationPass123!'
+    const registered = await registerUser(email, '错题本集成测试', password)
+    setCsrfToken(registered.csrfToken)
+    const attempt = await createAttempt('backend')
+    const answers: Answers = Object.fromEntries(attempt.questions.map((question) => [
+      question.id, [question.options[0].id],
+    ]))
+    await saveAnswers(attempt.id, answers, attempt.answersVersion)
+    await submitAttempt(attempt.id)
+    const before = await fetchReport(attempt.id)
+    expect(before.ok).toBe(true)
+    if (!before.ok) throw new Error('Submitted report is unavailable')
+    const wrongCount = before.report.dimensions.reduce((sum, dimension) => sum + dimension.total - dimension.correct, 0)
+    expect(wrongCount).toBeGreaterThan(0)
+    const query = { roleId: 'backend', dimension: '', topicId: '', status: 'all' as const, offset: 0 }
+    const list = await fetchWrongQuestions(query, new AbortController().signal)
+    expect(list.total).toBe(wrongCount)
+    const item = await fetchWrongDetail(list.items[0].id, new AbortController().signal)
+    const requestId = crypto.randomUUID()
+    const practiced = await submitPractice(item.id, item.question.correct, requestId)
+    expect(practiced.result.isCorrect).toBe(true)
+    expect(practiced.item.practiceCount).toBe(1)
+    expect((await submitPractice(item.id, item.question.correct, requestId)).item.practiceCount).toBe(1)
+    expect((await saveMastery(item.id, true)).mastered).toBe(true)
+    await logoutUser()
+    const loggedIn = await loginUser(email, password)
+    setCsrfToken(loggedIn.csrfToken)
+    const restored = await fetchWrongDetail(item.id, new AbortController().signal)
+    expect(restored.mastered).toBe(true)
+    expect(restored.practiceCount).toBe(1)
+    expect((await saveMastery(item.id, false)).mastered).toBe(false)
+    expect(await fetchReport(attempt.id)).toEqual(before)
+    const other = await registerUser(`other-${crypto.randomUUID().slice(0, 8)}@example.invalid`, '其他测试用户', password)
+    setCsrfToken(other.csrfToken)
+    expect((await fetchWrongQuestions(query, new AbortController().signal)).items).toEqual([])
+    await expect(fetchWrongDetail(item.id, new AbortController().signal)).rejects.toMatchObject({ status: 404 })
+  })
   it('loads catalog and surfaces real 401 errors for unauthenticated requests', async () => {
     installLiveBrowserFetch(requireApiBase())
 

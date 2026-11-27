@@ -12,11 +12,12 @@ type JobSelectionPageProps = {
   onStartAssessment: () => Promise<void>
   isStarting: boolean
   onOpenHistory: () => void
+  onOpenWrongbook?: () => void
 }
 
 export default function JobSelectionPage({
   user, logout, isLoggingOut, accountError, selectedRoleId, onSelectRole, onStartAssessment, isStarting,
-  onOpenHistory,
+  onOpenHistory, onOpenWrongbook,
 }: JobSelectionPageProps) {
   const [catalog, setCatalog] = useState<Catalog | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -75,6 +76,7 @@ export default function JobSelectionPage({
           >
             历史测评记录
           </button>
+          {onOpenWrongbook && <button className="jobs-back" type="button" disabled={isLoggingOut || isSelecting || isStarting} onClick={onOpenWrongbook}>错题本</button>}
         </div>
         {accountError && <p role="alert">{accountError}</p>}
         <p className="jobs-tag">SKILLPROOF · ALPHA</p>
