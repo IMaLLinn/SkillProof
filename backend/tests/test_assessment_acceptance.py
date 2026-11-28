@@ -1,21 +1,15 @@
 """Check saved answers, incomplete submission and reports through the public API."""
 
-import hashlib
-import json
 import unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from assessment_fixtures import DIMENSIONS, write_assessment_bank
 from fastapi.testclient import TestClient
 
 from app.config import Settings
 from app.main import create_app
 
-DIMENSIONS = (
-    ("programming", "程序设计"), ("algorithms", "算法基础"),
-    ("database", "数据库"), ("network", "计算机网络"),
-    ("os", "操作系统"), ("software", "软件工程"),
-)
 PASSWORD = "assessment-acceptance-password"
 
 
@@ -23,45 +17,7 @@ class AssessmentAcceptanceTests(unittest.TestCase):
     def setUp(self):
         directory = Path(self.enterContext(TemporaryDirectory()))
         content = directory / "content"
-        content.mkdir()
-        tree = json.loads((Settings().content_dir / "ability-tree.json").read_text(encoding="utf-8"))
-        tree["role"]["description"] = "流程验收测试岗位"
-        for dimension in tree["dimensions"]:
-            dimension["topics"].append({"id": f"{dimension['id']}.acceptance", "name": "流程验收样例"})
-        questions = []
-        for dimension, _ in DIMENSIONS:
-            for suffix, difficulty, kind, correct in (
-                ("easy-1", "easy", "single", ["A"]),
-                ("easy-2", "easy", "single", ["B"]),
-                ("medium", "medium", "multiple", ["A", "C"]),
-            ):
-                questions.append({
-                    "id": f"{dimension}-{suffix}", "dimension": dimension,
-                    "topicId": f"{dimension}.acceptance", "topic": "流程验收样例",
-                    "type": kind, "difficulty": difficulty,
-                    "stem": f"固定流程测试题：{dimension}-{suffix}",
-                    "options": [{"id": option, "text": f"选项 {option}"} for option in "ABCD"],
-                    "correct": correct, "explanation": "固定答案仅用于自动化流程测试。",
-                    "sources": [{"title": "流程验收样例", "url": "https://example.com/test-fixture"}],
-                    "version": 1, "status": "published",
-                })
-        fixtures = {"ability-tree.json": tree, "questions.json": questions}
-        hashes = {}
-        for name, data in fixtures.items():
-            raw = json.dumps(data, ensure_ascii=False).encode("utf-8")
-            (content / name).write_bytes(raw)
-            hashes[name] = hashlib.sha256(raw).hexdigest()
-        manifest = {
-            "schemaVersion": "1.0",
-            "roleId": "backend",
-            "bankId": "assessment-acceptance",
-            "bankVersion": "1.0.0",
-            "questionFile": "questions.json",
-            "abilityTreeFile": "ability-tree.json",
-            "questionCount": len(questions),
-            "files": hashes,
-        }
-        (content / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+        write_assessment_bank(content)
         self.settings = Settings(
             database_path=directory / "assessment.sqlite3", content_dir=content,
             environment="development", cookie_secure=False,

@@ -25,6 +25,7 @@ class ResetLocalDatabaseTests(unittest.TestCase):
         self.root = Path(self.enterContext(tempfile.TemporaryDirectory()))
         self.database = self.root / 'local.db'
         self.settings = Settings(database_path=self.database, environment='development')
+        self.seed_questions = json.loads((self.settings.content_dir / 'questions.json').read_text(encoding='utf-8'))
         initialize(self.settings)
         with closing(connect(self.settings)) as con:
             con.execute("INSERT INTO users(id,email,name,role,password_hash,created_at) VALUES('local','local@example.invalid','Local','student','test-only',?)", (now_iso(),))
@@ -57,8 +58,9 @@ class ResetLocalDatabaseTests(unittest.TestCase):
             self.assertEqual(con.execute('SELECT content_json FROM questions LIMIT 1').fetchone()[0], '{}')
         with closing(connect(self.settings)) as con:
             self.assertEqual(con.execute('SELECT COUNT(*) FROM users').fetchone()[0], 0)
-            self.assertEqual(con.execute("SELECT COUNT(*) FROM questions WHERE status='published'").fetchone()[0], 42)
-            self.assertEqual(con.execute('SELECT COUNT(*) FROM question_versions').fetchone()[0], 42)
+            published = sum(q['status'] == 'published' for q in self.seed_questions)
+            self.assertEqual(con.execute("SELECT COUNT(*) FROM questions WHERE status='published'").fetchone()[0], published)
+            self.assertEqual(con.execute('SELECT COUNT(*) FROM question_versions').fetchone()[0], len(self.seed_questions))
             self.assertEqual(con.execute('PRAGMA integrity_check').fetchone()[0], 'ok')
         initialize(self.settings)
 
